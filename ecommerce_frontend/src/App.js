@@ -17,6 +17,12 @@ function App() {
         >
           Learn React
         </a>
+        .<div
+          class="container bg-red-200 w-[200px] h-[200px]"
+        >
+          bs5-grid-row
+        </div>
+        
       </header>
     </div>
   );
