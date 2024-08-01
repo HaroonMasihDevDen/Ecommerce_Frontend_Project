@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useMutation } from 'react-query';
 import Cookies from 'js-cookie';
+import axios from 'axios';
+
 
 
 export default function Login() {
@@ -8,53 +10,61 @@ export default function Login() {
   const [enteredPassword, setEnteredPassword] = useState("");
 
   const mutation = useMutation(async (userData) => {
-    const res = await fetch("http://localhost:3001/login", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ user: userData }),
-    });
-    console.log("res:",res);
-    if (!res.ok) {
-      console.log("res in failure:",res);
-      alert(res.statusText);
+    try {
+      const response = await axios.post("http://localhost:3001/login", {
+        user: userData,
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+  
+      console.log("res:", response.data);
+      console.log("res.body:", response.data.body);
+  
+      // Assuming the token is in the 'Authorization' header
+      const token = response.headers['authorization'];
+      if (token) {
+        Cookies.set('Authorization', token); // Store the token in cookies
+        alert("Session token stored in Cookies successfully");
+      } else {
+        alert("Authorization is missing in response headers");
+      }
+  
+      alert("User successfully logged in");
+      return response.data;
+    } catch (error) {
+      console.log("res in failure:", error.response?.data);
+      alert(error.response?.data || 'Network response was not ok');
       throw new Error('Network response was not ok');
     }
-    alert("user successfully login");
-    const token = res.headers.get('Authorization'); // Assuming the token is in the 'auth' header
-    if (token) {
-      Cookies.set('Authorization', token); // Store the token in cookies
-      alert("Session token stored in Cookies successfully");
-    }
-    else{
-      alert("Authorization is missing in response headers");
-    }
-    return res.json();
   });
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     mutation.mutate({ email: enteredEmail, password: enteredPassword });
   };
-
+  
   const logoutMutation = useMutation(async () => {
-    const res = await fetch("http://localhost:3001/logout", {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': Cookies.get('Authorization'),
-        // 'Authorization': `Bearer ${Cookies.get('Authorization')}`, // Assuming the token is in the 'Authorization' cookie
-      },
-    });
-    console.log("token is :",Cookies.get('Authorization'))
-    console.log("logout action res : ",res);
-    if (!res.ok) {
-      throw new Error('Network response was not ok');
+    try {
+      const response = await axios.delete("http://localhost:3001/logout", {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': Cookies.get('Authorization'),
+          // 'Authorization': `Bearer ${Cookies.get('Authorization')}`, // Uncomment if the token needs to be prefixed with "Bearer"
+        }
+      });
+  
+      console.log("token is :", Cookies.get('Authorization'));
+      console.log("logout action res:", response);
+  
+      return response.data;
+    } catch (error) {
+      console.log("Logout error:", error.response?.data);
+      throw new Error(error.response?.statusText || 'Network response was not ok');
     }
-    return res.json();
   });
-
+  
   const logoutAction = () => {
     logoutMutation.mutate(undefined, {
       onSuccess: () => {
@@ -66,7 +76,6 @@ export default function Login() {
       },
     });
   };
-
   return (
     <>
     

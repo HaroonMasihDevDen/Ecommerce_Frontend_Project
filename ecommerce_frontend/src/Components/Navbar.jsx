@@ -1,6 +1,39 @@
 import React from 'react'
+import { useMutation } from 'react-query';
+import Cookies from 'js-cookie';
 
 export default function Navbar() {
+
+  
+
+  const logoutMutation = useMutation(async () => {
+    const res = await fetch("http://localhost:3001/logout", {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': Cookies.get('Authorization'),
+        // 'Authorization': `Bearer ${Cookies.get('Authorization')}`, // Assuming the token is in the 'Authorization' cookie
+      },
+    });
+    console.log("token is :",Cookies.get('Authorization'))
+    console.log("logout action res : ",res);
+    if (!res.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return res.json();
+  });
+
+  const handleLogout = () => {
+    logoutMutation.mutate(undefined, {
+      onSuccess: () => {
+        Cookies.remove('Authorization'); // Remove the token from cookies
+        alert("Session token removed from Cookies and user successfully logged out");
+      },
+      onError: (error) => {
+        alert(`Logout failed: ${error.message}`);
+      },
+    });
+  };
   return (
     <div>
       <header class="antialiased">
@@ -212,7 +245,7 @@ export default function Navbar() {
                 </ul>
                 <ul class="py-1 text-gray-500 dark:text-gray-400" aria-labelledby="dropdown">
                   <li>
-                    <a href="#" class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
+                    <a onClick={handleLogout} class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
                   </li>
                 </ul>
               </div>
