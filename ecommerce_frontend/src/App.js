@@ -4,6 +4,8 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import Login from "./Components/Login";
 import Temp from "./Components/Temp";
 import "./App.css";
+import Home from "./Pages/Home";
+
 
 // Create a client
 const queryClient = new QueryClient();
@@ -14,6 +16,7 @@ function App() {
       <Router>
         <div className="App">
           <Routes>
+            <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/temp" element={<Temp />} />
             {/* <Route path="/contact" element={<Contact />} /> */}
