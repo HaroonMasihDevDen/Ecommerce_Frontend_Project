@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { useMutation } from 'react-query';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+// import { useNavigate } from 'react-router-dom'; // Import the useNavigate hook
 
 
 
 export default function Login() {
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
+  // const navigate = useNavigate();
 
   const mutation = useMutation(async (userData) => {
     try {
@@ -27,15 +29,24 @@ export default function Login() {
       if (token) {
         Cookies.set('Authorization', token); // Store the token in cookies
         alert("Session token stored in Cookies successfully");
+        let userName=response.data.status.data.user["name"];
+        let userEmail=response.data.status.data.user["email"];
+        // alert(userName);
+        // alert(response.data["email"]);
+        localStorage.setItem("userName",userName);
+        localStorage.setItem("userEmail",userEmail);
       } else {
         alert("Authorization is missing in response headers");
       }
+
   
       alert("User successfully logged in");
+      // navigate('/'); 
+      window.location.href = '/';
       return response.data;
     } catch (error) {
       console.log("res in failure:", error.response?.data);
-      alert(error.response?.data || 'Network response was not ok');
+      alert(error || error.response?.data || 'Network response was not ok');
       throw new Error('Network response was not ok');
     }
   });
@@ -45,37 +56,6 @@ export default function Login() {
     mutation.mutate({ email: enteredEmail, password: enteredPassword });
   };
   
-  const logoutMutation = useMutation(async () => {
-    try {
-      const response = await axios.delete("http://localhost:3001/logout", {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': Cookies.get('Authorization'),
-          // 'Authorization': `Bearer ${Cookies.get('Authorization')}`, // Uncomment if the token needs to be prefixed with "Bearer"
-        }
-      });
-  
-      console.log("token is :", Cookies.get('Authorization'));
-      console.log("logout action res:", response);
-  
-      return response.data;
-    } catch (error) {
-      console.log("Logout error:", error.response?.data);
-      throw new Error(error.response?.statusText || 'Network response was not ok');
-    }
-  });
-  
-  const logoutAction = () => {
-    logoutMutation.mutate(undefined, {
-      onSuccess: () => {
-        Cookies.remove('Authorization'); // Remove the token from cookies
-        alert("Session token removed from Cookies and user successfully logged out");
-      },
-      onError: (error) => {
-        alert(`Logout failed: ${error.message}`);
-      },
-    });
-  };
   return (
     <>
     
