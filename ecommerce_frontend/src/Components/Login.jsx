@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useMutation } from 'react-query';
-import Cookies from 'js-cookie';
-import axios from 'axios';
-// import { useNavigate } from 'react-router-dom'; // Import the useNavigate hook
+import { login, logout, validateToken } from '../api/auth';
+
 
 
 
@@ -11,51 +10,19 @@ export default function Login() {
   const [enteredPassword, setEnteredPassword] = useState("");
   // const navigate = useNavigate();
 
-  const mutation = useMutation(async (userData) => {
-    try {
-      const response = await axios.post("http://localhost:3001/login", {
-        user: userData,
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
-  
-      console.log("res:", response.data);
-      console.log("res.body:", response.data.body);
-  
-      // Assuming the token is in the 'Authorization' header
-      const token = response.headers['authorization'];
-      if (token) {
-        Cookies.set('Authorization', token); // Store the token in cookies
-        alert("Session token stored in Cookies successfully");
-        let userName=response.data.status.data.user["name"];
-        let userEmail=response.data.status.data.user["email"];
-        // alert(userName);
-        // alert(response.data["email"]);
-        localStorage.setItem("userName",userName);
-        localStorage.setItem("userEmail",userEmail);
-      } else {
-        alert("Authorization is missing in response headers");
-      }
-
-  
-      alert("User successfully logged in");
-      // navigate('/'); 
-      window.location.href = '/';
-      return response.data;
-    } catch (error) {
-      console.log("res in failure:", error.response?.data);
-      alert(error || error.response?.data || 'Network response was not ok');
-      throw new Error('Network response was not ok');
+  const loginMutation = useMutation(login, {
+    onSuccess: () => {
+      window.location.href = '/'; // Redirect on success
+    },
+    onError: (error) => {
+      alert(`Login failed: ${error.message}`);
     }
   });
-  
-  const handleSubmit = (e) => {
+
+  const handleLogin = (e) => {
     e.preventDefault();
-    mutation.mutate({ email: enteredEmail, password: enteredPassword });
+    loginMutation.mutate({user: { email: enteredEmail, password: enteredPassword }});
   };
-  
   return (
     <>
     
@@ -74,7 +41,7 @@ export default function Login() {
             </div>
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-              <form onSubmit={handleSubmit} method="POST" className="space-y-6">
+              <form onSubmit={handleLogin} method="POST" className="space-y-6">
                 <div>
                   <label
                     htmlFor="email"

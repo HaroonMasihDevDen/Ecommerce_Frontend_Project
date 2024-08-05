@@ -1,41 +1,27 @@
-import React, { useState } from 'react'
-import { useMutation } from 'react-query';
 import Cookies from 'js-cookie';
-import axios from 'axios';
+import { useMutation } from 'react-query';
+import { logout } from '../api/auth';
+import { useEffect } from 'react';
 
-export default function Navbar({ userName, userEmail }) {
 
-
-  const logoutMutation = useMutation(async () => {
-    try {
-      const response = await axios.delete("http://localhost:3001/logout", {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': Cookies.get('Authorization'),
-         }
-      });
-  
-      console.log("token is :", Cookies.get('Authorization'));
-      console.log("logout action res:", response);
-  
-      return response.data;
-    } catch (error) {
-      console.log("Logout error:", error.response?.data);
-      throw new Error(error.response?.statusText || 'Network response was not ok');
+export default function Navbar({ userName, userEmail,is_User_Logged_In }) {
+  const logoutMutation = useMutation(logout, {
+    onSuccess: () => {
+      Cookies.remove('Authorization'); // Remove the token from cookies
+      alert("Session token removed from Cookies and user successfully logged out");
+      window.location.href = '/login'; // Redirect to login page after logout
+    },
+    onError: (error) => {
+      alert(`Logout failed: ${error.message}`);
     }
   });
-  
+
   const handleLogout = () => {
-    logoutMutation.mutate(undefined, {
-      onSuccess: () => {
-        Cookies.remove('Authorization'); // Remove the token from cookies
-        alert("Session token removed from Cookies and user successfully logged out");
-      },
-      onError: (error) => {
-        alert(`Logout failed: ${error.message}`);
-      },
-    });
+    logoutMutation.mutate();
   };
+  useEffect(()=>{
+    // alert(is_User_Logged_In);
+  });
   return (
     <div>
       <header class="antialiased">
@@ -63,7 +49,8 @@ export default function Navbar({ userName, userEmail }) {
                 </div>
               </form>
             </div>
-            <div class="flex items-center lg:order-2">
+            {/* {is_User_Logged_In===true && <div class="flex items-center lg:order-2"> */}
+             <div class="flex items-center lg:order-2">
               <button type="button" class="hidden sm:inline-flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"><svg aria-hidden="true" class="mr-1 -ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg> New Widget</button>
               <button id="toggleSidebarMobileSearch" type="button" class="p-2 text-gray-500 rounded-lg lg:hidden hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                 <span class="sr-only">Search</span>
@@ -252,6 +239,7 @@ export default function Navbar({ userName, userEmail }) {
                 </ul>
               </div>
             </div>
+            {/* } */}
           </div>
         </nav>
       </header>
