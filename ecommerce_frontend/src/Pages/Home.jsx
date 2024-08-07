@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from '../Components/Navbar';
 import { useMutation } from 'react-query';
 import { validateToken } from '../api/auth';
+import ProductGrid from '../Components/ProductGrid';
 
 export default function Home() {
   const [userName, setUserName] = useState(null);
@@ -32,10 +33,22 @@ export default function Home() {
   return (
     <>
       <div className='navbar'>
-        {isUserLoggedIn !== null && (
+        <Navbar></Navbar>
+        {/* {isUserLoggedIn !== null && (
           <Navbar userName={userName} userEmail={userEmail} is_User_Logged_In={isUserLoggedIn} />
-        )}
+        )} */}
       </div>
+      <div className="header">
+        this is the headers
+      </div>
+      <div className="main-content">
+         
+        <div className='ProductGrid h-full w-full'>
+          <ProductGrid></ProductGrid>
+
+        </div>
+      </div>
+
     </>
   );
 }

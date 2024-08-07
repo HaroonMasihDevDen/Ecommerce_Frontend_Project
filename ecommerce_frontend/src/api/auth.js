@@ -39,7 +39,7 @@ export const login = async (userData) => {
 
 // Function to validate user token
 export const validateToken = async () => {
-  alert("Token verification function called");
+  // alert("Token verification function called");
   try {
     const response = await axios.get(VALIDATE_TOKEN_API, {
       headers: {

@@ -45,7 +45,7 @@ export default function Login() {
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-sm font-medium leading-6 text-gray-900 flex"
+                    className="block text-sm font-medium leading-6 text-gray-900"
                   >
                     Email address
                   </label>

@@ -7,6 +7,7 @@ import "./App.css";
 import Home from "./Pages/Home";
 
 
+
 // Create a client
 const queryClient = new QueryClient();
 
