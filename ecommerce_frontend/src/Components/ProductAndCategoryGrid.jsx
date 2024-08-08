@@ -3,37 +3,38 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import { getCategories } from '../api/category';
 import ProductCard from './ProductCard';
 import CategoryCard from './CategoryCard';
+import { getProducts } from '../api/product';
 
 // Recursive Dropdown Component
 
 
-const productItems = [
-   {
-      id: 1,
-      name: 'Italian Cotton Shirts',
-      price: 599,
-      description: 'This is a high-quality Italian cotton shirt.',
-      discountPercentage: 20,
-      imageUrl: 'https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb',
-   },
-   {
-      id: 2,
-      name: 'Summer Dress',
-      price: 799,
-      description: 'A beautiful summer dress for all occasions.',
-      discountPercentage: 15,
-      imageUrl: 'https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb',
-   },
-   {
-      id: 3,
-      name: 'Winter Jacket',
-      price: 1499,
-      description: 'Stay warm with this stylish winter jacket.',
-      discountPercentage: 10,
-      imageUrl: 'https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb',
-   },
-   // Add more products as needed
-];
+// const productItems = [
+//    {
+//       id: 1,
+//       name: 'Italian Cotton Shirts',
+//       price: 599,
+//       description: 'This is a high-quality Italian cotton shirt.',
+//       discountPercentage: 20,
+//       imageUrl: 'https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb',
+//    },
+//    {
+//       id: 2,
+//       name: 'Summer Dress',
+//       price: 799,
+//       description: 'A beautiful summer dress for all occasions.',
+//       discountPercentage: 15,
+//       imageUrl: 'https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb',
+//    },
+//    {
+//       id: 3,
+//       name: 'Winter Jacket',
+//       price: 1499,
+//       description: 'Stay warm with this stylish winter jacket.',
+//       discountPercentage: 10,
+//       imageUrl: 'https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb',
+//    },
+//    // Add more products as needed
+// ];
 
 
 
@@ -94,20 +95,27 @@ const ProductAndCategoryGrid = () => {
       // Add more items as needed
    ];
    const [categoryItems, setCategoryItems] = useState(null);
+   const [productItems, setProductItems] = useState(null);
 
    useEffect(() => {
       fetchCategories();
+      fetchProducts();
    }, [0]);
 
    const fetchCategories = async () => {
       const categories = await getCategories();
       setCategoryItems(categories);
       console.log("categoryItems:::", categories);
-      console.log("categoryItems_dumy:::", categoryItems_dumy);
+   };
+
+   const fetchProducts = async () => {
+      const products = await getProducts();
+      setProductItems(products);
+      console.log("categoryItems:::", products);
    };
 
    return (
-      <div className="flex w-[100%] h-fit bg-gray-100 px-6">
+      <div className="flex w-[100%] h-[100%] px-6">
          <div className="category w-[20%]">
             <div className="categoryList rounded-md shadow-lg px-4 py-2 h-[20rem] bg-white m-4">
                <div className='cat-header m-2 text-center'>CATEGORY</div>
@@ -121,102 +129,16 @@ const ProductAndCategoryGrid = () => {
             </div>
          </div>
 
-         {/* <div className="product-main flex w-[80%] bg-gray-50 p-4">
-            <div className="my_item w-[20rem] h-fit max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-2">
-               <a href="#" className='relative'>
-                  <img className="rounded-t-lg" src="https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb" alt="product image" />
-                  <span className="absolute top-2 end-2 p-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded dark:bg-blue-200 dark:text-blue-800">
-                     20% Discount
-                  </span>
-               </a>
-               <div className="px-5 pb-5">
-                  <span className='flex justify-between '>
+        
 
-                     <a href="#">
-                        <h5 className="text-xl font-semibold tracking-tight text-gray-900 capitalize">italian cotton</h5>
-                     </a>
-                  </span>
-
-                  <div className="flex items-center mt-2.5 mb-5">
-                     <div className="">
-                        <p>
-                           this is the description of this product
-                        </p>
-                     </div>
-                  </div>
-                  <div className="flex items-center justify-between">
-                     <span className="text-xl font-bold text-gray-900">Rs. 599</span>
-                     <a href="#" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add to cart</a>
-                  </div>
-               </div>
+         <div className="w-[80%]  h-[70rem]">
+            <div className='bg-gray-50 p-4 flex flex-wrap justify-around gap-y-2 p-auto'>
+               {productItems !== null && (
+                  productItems.map(product => (
+                     product.imageUrl = 'https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb',
+                     <ProductCard key={product.id} product={product} />
+                  )))}
             </div>
-
-            <div className="item w-[20rem] h-fit max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-2">
-               <a href="#" className='relative'>
-                  <img className="rounded-t-lg" src="https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb" alt="product image" />
-                  <span className="absolute top-2 end-2 p-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded dark:bg-blue-200 dark:text-blue-800">
-                     20% Discount
-                  </span>
-               </a>
-               <div className="px-5 pb-5">
-                  <span className='flex justify-between '>
-
-                     <a href="#">
-                        <h5 className="text-xl font-semibold tracking-tight text-gray-900 capitalize">italian cotton</h5>
-                     </a>
-                  </span>
-
-                  <div className="flex items-center mt-2.5 mb-5">
-                     <div className="">
-                        <p>
-                           this is the description of this product
-                        </p>
-                     </div>
-                  </div>
-                  <div className="flex items-center justify-between">
-                     <span className="text-xl font-bold text-gray-900">Rs. 599</span>
-                     <a href="#" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add to cart</a>
-                  </div>
-               </div>
-            </div>
-
-            <div className="item w-[20rem] h-fit max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-2">
-               <a href="#" className='relative'>
-                  <img className="rounded-t-lg" src="https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb" alt="product image" />
-                  <span className="absolute top-2 end-2 p-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded dark:bg-blue-200 dark:text-blue-800">
-                     20% Discount
-                  </span>
-               </a>
-               <div className="px-5 pb-5">
-                  <span className='flex justify-between '>
-
-                     <a href="#">
-                        <h5 className="text-xl font-semibold tracking-tight text-gray-900 capitalize">italian cotton</h5>
-                     </a>
-                  </span>
-
-                  <div className="flex items-center mt-2.5 mb-5">
-                     <div className="">
-                        <p>
-                           this is the description of this product
-                        </p>
-                     </div>
-                  </div>
-                  <div className="flex items-center justify-between">
-                     <span className="text-xl font-bold text-gray-900">Rs. 599</span>
-                     <a href="#" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add to cart</a>
-                  </div>
-               </div>
-            </div>
-
-           
-
-         </div> */}
-
-         <div className="product-main flex w-[80%] bg-gray-50 p-4">
-            {productItems.map(product => (
-               <ProductCard key={product.id} product={product} />
-            ))}
          </div>
 
       </div>

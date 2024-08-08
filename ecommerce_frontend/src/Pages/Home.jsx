@@ -3,8 +3,19 @@ import Navbar from '../Components/Navbar';
 import { useMutation } from 'react-query';
 import { validateToken } from '../api/auth';
 import ProductAndCategoryGrid from '../Components/ProductAndCategoryGrid';
+import ProductCard from '../Components/ProductCard';
 
 export default function Home() {
+
+  const productItems =
+   {
+      id: 1,
+      name: 'Italian Cotton Shirts',
+      price: 599,
+      description: 'This is a high-quality Italian cotton shirt.',
+      discountPercentage: 20,
+      imageUrl: 'https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb',
+   }
   const [userName, setUserName] = useState(null);
   const [userEmail, setUserEmail] = useState(null);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(null);
@@ -41,11 +52,10 @@ export default function Home() {
       <div className="header">
         this is the headers
       </div>
-      <div className="main-content">
+      <div className="p-4 h-[70rem]">
          
-        <div className='ProductAndCategoryGrid h-full w-full'>
+        <div className='ProductAndCategoryGrid h-[100%] w-full p-3 '>
           <ProductAndCategoryGrid></ProductAndCategoryGrid>
-
         </div>
       </div>
 
