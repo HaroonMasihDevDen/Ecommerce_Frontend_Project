@@ -13,3 +13,4 @@ export const CATEGORIES_API = getApiUrl('/categories');
 
 // product.js
 export const PRODUCTS_API = getApiUrl('/products');
+export const PRODUCT_DETAILS_API = getApiUrl('/products');
