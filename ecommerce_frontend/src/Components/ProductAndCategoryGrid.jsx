@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import { getCategories } from '../api/category';
+import { getCategories , getCategoriesByID } from '../api/category';
 import ProductCard from './ProductCard';
 import CategoryCard from './CategoryCard';
 import { getProducts } from '../api/product';
@@ -114,6 +114,11 @@ const ProductAndCategoryGrid = () => {
       console.log("categoryItems:::", products);
    };
 
+   const searchProductOfThisCategory = async (catg_id) => {
+      const products = await getCategoriesByID(catg_id);
+      setProductItems(products);    
+   };
+
    return (
       <div className="flex w-[100%] h-[100%] px-6">
          <div className="category w-[20%]">
@@ -122,7 +127,7 @@ const ProductAndCategoryGrid = () => {
                <div className="cat-list mt-2">
                   {
                      categoryItems !== null && (
-                        <CategoryCard items={categoryItems} parentIndex="root" />
+                        <CategoryCard  items={categoryItems} parentIndex="root" searchProductOfThisCategory_callBack= {searchProductOfThisCategory} />
                      )
                   }
                </div>
