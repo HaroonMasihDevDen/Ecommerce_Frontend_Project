@@ -1,40 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import CartTable from './CartTable';
-
-const initialProductItems = [
-  {
-    name: 'ITALIAN BED',
-    image: 'https://i.imgur.com/ohfEDZm.jpg',
-    size: 'XL',
-    price: 120,
-  },
-  {
-    name: 'ITALIAN BED',
-    image: 'https://i.imgur.com/74oR13w.jpg',
-    size: 'XL',
-    price: 30,
-  },
-  {
-    name: 'ITALIAN BED',
-    image: 'https://i.imgur.com/82cs9j1.jpg',
-    size: 'XL',
-    price: 220,
-  },
-  {
-    name: 'ITALIAN BED',
-    image: 'https://i.imgur.com/dejlILO.jpg',
-    size: 'XL',
-    price: 90,
-  },
-  // Add more product items as needed
-];
+import CartTable from '../Components/CartTable';
+import { get_user_cart_items } from '../api/cart';
+import { checkIfUserAuthAndNavigate } from "../service/authUser";
 
 const CartPage = () => {
   const [subtotal, setSubtotal] = useState(0);
-  const [productItems, setProductItems] = useState(initialProductItems); // Assuming initialProductItems is your initial array
+  const [cartItems, setCartItems] = useState([]); // Assuming initialCartItems is your initial array
 
   // Initialize quantity state for each product
-  const initialQuantities = productItems.map(() => 1);
+  const initialQuantities = cartItems.map((item) => item.quantity);
   const [quantities, setQuantities] = useState(initialQuantities);
 
   // Function to update quantity
@@ -47,29 +21,74 @@ const CartPage = () => {
     );
   };
   const calculateSubtotal = () => {
-    return productItems.reduce((total, item, index) => {
+    return cartItems.reduce((total, item, index) => {
       return total + item.price * quantities[index];
     }, 0);
   };
   const removeItem = (index) => {
-    const newProductItems = [...productItems];
+    const newProductItems = [...cartItems];
     const newQuantities = [...quantities];
 
+    removeItemFromCart(cartItems[index].id);
     newProductItems.splice(index, 1);
     newQuantities.splice(index, 1);
 
-    setProductItems(newProductItems);
+    setCartItems(newProductItems);
     setQuantities(newQuantities);
   };
+  const removeItemFromCart = async (itemId) => {
+    try {
+      alert(itemId);
+      return;
+      // const res = await removeFromCart(itemId);
+      // console.log("response for removing item from cart", res);
+    } catch (error) {
+      console.error('Error removing item from cart:', error);
+    }
+  }
   useEffect(() => {
     setSubtotal(calculateSubtotal());
   }, [quantities]);
+
+
+  useEffect(() => {
+    authenticateUserUsingToken();
+  }, []);
+
+  useEffect(() => {
+    if (cartItems.length > 0) {
+      const initialQuantities = cartItems.map((item) => item.quantity);
+      setQuantities(initialQuantities);
+    }
+  },[cartItems]);
+
+  const authenticateUserUsingToken = async () => {
+    const userAuth = await checkIfUserAuthAndNavigate();
+    if (userAuth) {
+      fetchCartItems();
+    }
+  };
+
+  const fetchCartItems = async () => {
+    try {
+      const response = await get_user_cart_items();
+      console.log("response for get cart items", response);
+      if (response) {
+        response.map((item) => item.image = "https://i.imgur.com/ohfEDZm.jpg");
+        setCartItems(response);
+      } else {
+        setCartItems([]);
+      }
+    } catch (error) {
+      console.error('Error fetching cart items:', error);
+    }
+  };
 
   return (
     <>
       <section className="container mx-auto flex-grow max-w-[1200px] border-b py-5 lg:flex lg:flex-row lg:py-10">
         <CartTable
-          product={productItems}
+          product={cartItems}
           quantities={quantities}
           updateQuantity={updateQuantity}
           removeItem={removeItem}

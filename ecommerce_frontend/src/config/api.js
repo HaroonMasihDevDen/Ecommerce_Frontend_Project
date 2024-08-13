@@ -18,3 +18,4 @@ export const PRODUCT_DETAILS_API = getApiUrl('/products');
 
 // cart.js
 export const STORE_IN_CART_API = getApiUrl('/cart_items');
+export const GET_USER_CART_ITEMS_API = getApiUrl('/cart_items');

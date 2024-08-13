@@ -4,6 +4,7 @@ import { getProductDetails } from '../api/product';
 import Cookies from 'js-cookie';
 import { validateToken } from '../api/auth';
 import { addToCart } from '../api/cart';
+import { checkIfUserAuthAndNavigate } from '../service/authUser';
 
 const ProductDetailsPage = () => {
     const [quantity, setQuantity] = useState(1);
@@ -56,25 +57,6 @@ const ProductDetailsPage = () => {
         setSelectedSize(selectedValue);
     };
 
-    const checkIfUserAuthAndNavigate = async () => {
-        if (Cookies.get('Authorization')) {
-            const response = await validateToken("cart");
-            console.log("response for checking user auth token", response);
-            if (response.status.code === 200) {
-                alert("User authorized");
-                return true;
-            } else {
-                alert("User not authorized");
-                return false;
-            }
-        } else {
-            const lastLocation = window.location.pathname + window.location.search;
-            window.history.replaceState({ lastLocation }, null, lastLocation);
-            window.location = "/login";
-            return false;
-        }
-    };
-
     const addProductToCart = async (product_id) => {
         const userAuth = await checkIfUserAuthAndNavigate();
         if (userAuth) {
@@ -85,14 +67,7 @@ const ProductDetailsPage = () => {
             } else {
                 alert("Failed to add product to cart");
             }
-        } else {
-            localStorage.setItem('lastLocation', window.location.pathname);
-            window.location = "/login";
-          }
-        console.log(product_id);
-        console.log(userAuth);
-        console.log(selectedSizeID);
-        console.log(quantity);
+        }
     };
 
 

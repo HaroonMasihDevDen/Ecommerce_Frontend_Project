@@ -6,7 +6,7 @@ import Temp from "./Components/Temp";
 import "./App.css";
 import Home from "./Pages/Home";
 import ProductDetailsPage from "./Components/ProductDetailsPage";
-import CartPage from "./Components/CartPage";
+import CartPage from "./Pages/CartPage";
 
 
 

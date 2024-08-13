@@ -66,7 +66,7 @@ const CartTable = ({
                     </button>
                   </div>
                 </td>
-                <td className="mx-auto text-center">${x.price}</td>
+                <td className="mx-auto text-center">Rs. {x.price * quantities[index]}</td>
                 <td className="align-middle">
                   <FaTrashAlt
                     onClick={() => removeItem(index)}
