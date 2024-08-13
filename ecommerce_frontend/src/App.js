@@ -6,6 +6,7 @@ import Temp from "./Components/Temp";
 import "./App.css";
 import Home from "./Pages/Home";
 import ProductDetailsPage from "./Components/ProductDetailsPage";
+import CartPage from "./Components/CartPage";
 
 
 
@@ -22,6 +23,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/temp" element={<Temp />} />
             <Route path="/product/:id" element={<ProductDetailsPage />} />
+            <Route path="/cart" element={<CartPage />} />
           </Routes>
         </div>
       </Router>

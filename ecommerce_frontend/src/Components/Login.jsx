@@ -12,8 +12,14 @@ export default function Login() {
 
   const loginMutation = useMutation(login, {
     onSuccess: () => {
-      window.location.href = '/'; // Redirect on success
-    },
+      try {
+        const lastLocation = localStorage.getItem('lastLocation');
+        window.location.replace(lastLocation);
+      } catch (error) {
+        window.location.href = '/'; // Redirect on success
+      }
+    }
+    ,
     onError: (error) => {
       alert(`Login failed: ${error.message}`);
     }
@@ -21,11 +27,11 @@ export default function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    loginMutation.mutate({user: { email: enteredEmail, password: enteredPassword }});
+    loginMutation.mutate({ user: { email: enteredEmail, password: enteredPassword } });
   };
   return (
     <>
-    
+
       <div class="px-[10rem] py-[5rem] flex  ">
         <div class="flex justify-center w-full border border-2xl shadow-lg">
           <div className="flex min-h-full w-[40%] flex-col justify-center px-8 py-12 ">
@@ -109,7 +115,7 @@ export default function Login() {
                   <button
                     type="submit"
                     className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  
+
                   >
                     Sign in
                   </button>

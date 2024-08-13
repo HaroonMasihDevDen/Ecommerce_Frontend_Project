@@ -15,3 +15,6 @@ export const CATEGORIES_BY_ID_API = getApiUrl('/category_products');
 // product.js
 export const PRODUCTS_API = getApiUrl('/products');
 export const PRODUCT_DETAILS_API = getApiUrl('/products');
+
+// cart.js
+export const STORE_IN_CART_API = getApiUrl('/cart_items');

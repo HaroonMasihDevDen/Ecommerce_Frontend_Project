@@ -102,14 +102,16 @@ const ProductAndCategoryGrid = () => {
       fetchProducts();
    }, [0]);
 
-   const fetchCategories = async () => {
-      const categories = await getCategories();
+   const fetchCategories = async() => {
+      const categories = await   getCategories();
       setCategoryItems(categories);
       console.log("categoryItems:::", categories);
    };
 
-   const fetchProducts = async () => {
-      const products = await getProducts();
+   const fetchProducts = async() => {
+      const products =await getProducts();
+      console.log("products:::", products);
+
       setProductItems(products);
       console.log("categoryItems:::", products);
    };
@@ -138,7 +140,7 @@ const ProductAndCategoryGrid = () => {
 
          <div className="w-[80%]  h-[70rem]">
             <div className='bg-gray-50 p-4 flex flex-wrap justify-around gap-y-2 p-auto'>
-               {productItems !== null && (
+               {productItems !== null && productItems !== undefined && (
                   productItems.map(product => (
                      product.imageUrl = 'https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb',
                      <ProductCard key={product.id} product={product} />

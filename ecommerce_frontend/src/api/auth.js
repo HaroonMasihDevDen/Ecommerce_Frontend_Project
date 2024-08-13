@@ -37,9 +37,7 @@ export const login = async (userData) => {
   }
 };
 
-// Function to validate user token
-export const validateToken = async () => {
-  // alert("Token verification function called");
+export const validateToken = async (callFrom) => {
   try {
     const response = await axios.get(VALIDATE_TOKEN_API, {
       headers: {
@@ -56,8 +54,12 @@ export const validateToken = async () => {
     localStorage.setItem("userEmail", email);
     return response.data;
   } catch (error) {
-    console.error("Token validation error:", error.response?.data);
-    throw new Error(error.response?.statusText || 'Network response was not ok');
+    if (error.response?.status === 401 && callFrom==="cart") {
+      alert("You need to login again.");
+      Cookies.remove('Authorization'); // Clear the authorization cookie
+      window.location = '/login'; // Redirect to the login page
+    }
+    console.error("Token validation error:", error.response?.status);
   }
 };
 

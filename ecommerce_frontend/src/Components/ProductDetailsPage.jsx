@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getProductDetails } from '../api/product';
+import Cookies from 'js-cookie';
+import { validateToken } from '../api/auth';
+import { addToCart } from '../api/cart';
 
 const ProductDetailsPage = () => {
     const [quantity, setQuantity] = useState(1);
     const [product, setProduct] = useState(undefined);
     const { id: productId } = useParams();
     const [selectedSize, setSelectedSize] = useState(-1);
-    const [price,setprice] = useState(0);
+    const [selectedSizeID, setSelectedSizeID] = useState(-1);
+    const [price, setprice] = useState(0);
 
     var is_datailsFetched = false;
     useEffect(() => {
@@ -21,8 +25,12 @@ const ProductDetailsPage = () => {
 
         const response = await getProductDetails(productId);
         setProduct(response);
-        if (response){
+        if (response && response.sizes.length > 0) {
             setprice(response.sizes[0].price);
+            setSelectedSizeID(response.sizes[0].size_id);
+        }
+        else {
+            setprice("");
         }
     };
 
@@ -41,12 +49,52 @@ const ProductDetailsPage = () => {
         for (let i = 0; i < product.sizes.length; i++) {
             if (product.sizes[i].size_title == selectedValue) {
                 setprice(product.sizes[i].price);
+                setSelectedSizeID(product.sizes[i].size_id);
                 break;
             }
         }
-        setSelectedSize(selectedValue);       
+        setSelectedSize(selectedValue);
     };
-    
+
+    const checkIfUserAuthAndNavigate = async () => {
+        if (Cookies.get('Authorization')) {
+            const response = await validateToken("cart");
+            console.log("response for checking user auth token", response);
+            if (response.status.code === 200) {
+                alert("User authorized");
+                return true;
+            } else {
+                alert("User not authorized");
+                return false;
+            }
+        } else {
+            const lastLocation = window.location.pathname + window.location.search;
+            window.history.replaceState({ lastLocation }, null, lastLocation);
+            window.location = "/login";
+            return false;
+        }
+    };
+
+    const addProductToCart = async (product_id) => {
+        const userAuth = await checkIfUserAuthAndNavigate();
+        if (userAuth) {
+            const response = await addToCart(product_id, selectedSizeID, quantity);
+            console.log("response for adding product to cart", response);
+            if (response && response.status === 200) {
+                alert("Product added to cart successfully");
+            } else {
+                alert("Failed to add product to cart");
+            }
+        } else {
+            localStorage.setItem('lastLocation', window.location.pathname);
+            window.location = "/login";
+          }
+        console.log(product_id);
+        console.log(userAuth);
+        console.log(selectedSizeID);
+        console.log(quantity);
+    };
+
 
     return (
         <>
@@ -135,8 +183,8 @@ const ProductDetailsPage = () => {
                                     </div>
                                     <div className="flex justify-end">
 
-                                        <a href="#" className="bg-yellow-500 text-white py-2 px-4 rounded-lg shadow-md inline-block mr-2">Buy now</a>
-                                        <a href="#" className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md inline-block mr-2">
+                                        {/* <a href="#" className="bg-yellow-500 text-white py-2 px-4 rounded-lg shadow-md inline-block mr-2">Buy now</a> */}
+                                        <a onClick={() => addProductToCart(product.id)} className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md inline-block mr-2">
                                             <i className="fas fa-shopping-basket mr-1"></i> Add to cart
                                         </a>
 
@@ -148,7 +196,7 @@ const ProductDetailsPage = () => {
                                         <p className='font-bold border-b-2'>Description</p>
 
                                         <p className='text-start pt-3'>
-                                           {product.description}
+                                            {product.description}
                                         </p>
                                     </div>
                                 </div>
