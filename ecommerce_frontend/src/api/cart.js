@@ -1,6 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import { GET_USER_CART_ITEMS_API, STORE_IN_CART_API } from "../config/api";
+import { GET_USER_CART_ITEMS_API, STORE_IN_CART_API ,DELETE_FROM_CART_API } from "../config/api";
 export const addToCart = async (productID, sizeID, quantity) => {
   if (
     typeof productID !== "number" ||
@@ -48,6 +48,24 @@ export const addToCart = async (productID, sizeID, quantity) => {
 export const get_user_cart_items = async () => {
   try {
     const response = await axios.get(`${GET_USER_CART_ITEMS_API}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Cookies.get("Authorization") || null,
+      },
+    });
+    console.log("Cart response:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching from cart:", error.response?.data);
+    throw new Error(
+      error.response?.statusText ||
+        "Network response was not ok for adding to cart"
+    );
+  }
+};
+export const removeFromCart = async (cartItem_id) => {
+  try {
+    const response = await axios.delete(`${DELETE_FROM_CART_API}/${cartItem_id}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: Cookies.get("Authorization") || null,

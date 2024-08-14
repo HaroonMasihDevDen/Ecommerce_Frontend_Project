@@ -38,7 +38,7 @@ const CartTable = ({
                     </div>
                   </div>
                 </td>
-                <td className="mx-auto text-center">${x.price}</td>
+                <td className="mx-auto text-center">Rs. {x.price}</td>
                 {/* Additional code for quantity and total remains unchanged */}
                 <td className="align-middle">
                   <div className="flex items-center justify-center">

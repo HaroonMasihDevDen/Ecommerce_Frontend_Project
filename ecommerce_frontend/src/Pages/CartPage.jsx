@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import CartTable from '../Components/CartTable';
-import { get_user_cart_items } from '../api/cart';
+import { get_user_cart_items , removeFromCart } from '../api/cart';
 import { checkIfUserAuthAndNavigate } from "../service/authUser";
 
 const CartPage = () => {
@@ -38,10 +38,8 @@ const CartPage = () => {
   };
   const removeItemFromCart = async (itemId) => {
     try {
-      alert(itemId);
-      return;
-      // const res = await removeFromCart(itemId);
-      // console.log("response for removing item from cart", res);
+      const res = await removeFromCart(itemId);
+      console.log("response for removing item from cart", res);
     } catch (error) {
       console.error('Error removing item from cart:', error);
     }
