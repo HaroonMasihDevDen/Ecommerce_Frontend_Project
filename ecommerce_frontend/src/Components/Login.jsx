@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import { useMutation } from 'react-query';
 import { login, logout, validateToken } from '../api/auth';
 
-
-
-
 export default function Login() {
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
@@ -14,9 +11,16 @@ export default function Login() {
     onSuccess: () => {
       try {
         const lastLocation = localStorage.getItem('lastLocation');
-        window.location.replace(lastLocation);
+        localStorage.removeItem('lastLocation');
+        alert(lastLocation);
+        if (lastLocation != null) {
+          window.location.replace(lastLocation);
+        }
+        else {
+          window.location.href = '/';
+        }
       } catch (error) {
-        window.location.href = '/'; // Redirect on success
+        window.location.href = '/';
       }
     }
     ,

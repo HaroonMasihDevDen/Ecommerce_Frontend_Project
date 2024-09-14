@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 
 
-const CategoryCard = ({ items, parentIndex, searchProductOfThisCategory_callBack }) => {
+const CategoryCard = ({ items, parentIndex, searchProductOfThisCategory }) => {
    const initialStates = new Array(items.length).fill(false);
    const [dropdownStates, setDropdownStates] = useState(initialStates);
 
@@ -12,20 +12,22 @@ const CategoryCard = ({ items, parentIndex, searchProductOfThisCategory_callBack
       );
    };
    const callbackFunction = (id) => {
-      searchProductOfThisCategory_callBack(id);
+      searchProductOfThisCategory(id);
    }
 
    return (
       <ul className="text-start flex flex-col">
          {items.length > 0 && items.map((item, index) => (
-            <li key={item.id} className="text-start pt-2">
+            <li key={item.id} className="text-start ps-4 border-t justify-center align-center">
                <button
                   onClick={() => toggleDropdown(index)}
-                  className="text-black flex justify-between px-2 text-start w-full capitalize font-light hover:bg-green-300 hover:rounded "
+                  className="py-3 flex justify-between px-2 text-start w-full capitalize font-light hover:rounded "
                >
-                  <a className=''>
-                     <button onClick={()=>callbackFunction(item.id)}>
-                        {item.title}
+                  <a className='hover:text-blue-500'>
+                     <button onClick={() => callbackFunction(item.id)}>
+                        <h3 className='text-xl capitalize'>
+                           {item.title}
+                        </h3>
                      </button>
                   </a>
                   {item.subItems && item.subItems.length > 0 && (
@@ -43,7 +45,7 @@ const CategoryCard = ({ items, parentIndex, searchProductOfThisCategory_callBack
                         }`}
                   >
                      {/* Render sub-items recursively */}
-                     <CategoryCard items={item.subItems} parentIndex={`${parentIndex}-${index}`} searchProductOfThisCategory_callBack = {searchProductOfThisCategory_callBack} />
+                     <CategoryCard items={item.subItems} parentIndex={`${parentIndex}-${index}`} searchProductOfThisCategory={searchProductOfThisCategory} />
                   </ul>
                )}
             </li>

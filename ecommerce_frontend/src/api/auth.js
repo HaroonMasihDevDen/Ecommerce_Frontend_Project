@@ -1,23 +1,23 @@
-import axios from 'axios';
-import Cookies from 'js-cookie';
-import { LOGIN_API, LOGOUT_API, VALIDATE_TOKEN_API } from '../config/api';
+import axios from "axios";
+import Cookies from "js-cookie";
+import { LOGIN_API, LOGOUT_API, VALIDATE_TOKEN_API } from "../config/api";
 
 // Function to handle user login
 export const login = async (userData) => {
   try {
-    console.log("Login function is calling.....",LOGIN_API, userData);
+    console.log("Login function is calling.....", LOGIN_API, userData);
     const response = await axios.post(LOGIN_API, userData, {
       headers: {
-        'Content-Type': 'application/json',
-      }
+        "Content-Type": "application/json",
+      },
     });
 
     console.log("Login response:", response.data);
 
     // Assuming the token is in the 'Authorization' header
-    const token = response.headers['authorization'];
+    const token = response.headers["authorization"];
     if (token) {
-      Cookies.set('Authorization', token); // Store the token in cookies
+      Cookies.set("Authorization", token); // Store the token in cookies
       alert("Session token stored in Cookies successfully");
       const userName = response.data.status.data.user.name;
       const userEmail = response.data.status.data.user.email;
@@ -32,8 +32,8 @@ export const login = async (userData) => {
     return response.data;
   } catch (error) {
     console.error("Error during login:", error.response?.data);
-    alert(error.response?.data?.message || 'Network response was not ok');
-    throw new Error('Network response was not ok');
+    alert(error.response?.data?.message || "Network response was not ok");
+    throw new Error("Network response was not ok");
   }
 };
 
@@ -41,23 +41,24 @@ export const validateToken = async (callFrom) => {
   try {
     const response = await axios.get(VALIDATE_TOKEN_API, {
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': Cookies.get('Authorization'),
-      }
+        "Content-Type": "application/json",
+        Authorization: Cookies.get("Authorization"),
+      },
     });
 
-    console.log("Token is:", Cookies.get('Authorization'));
+    console.log("Token is:", Cookies.get("Authorization"));
     console.log("Validate token action response:", response);
 
     const { name, email } = response.data.data;
     localStorage.setItem("userName", name);
     localStorage.setItem("userEmail", email);
-    return response.data;
+    const res = response.status === 200 ? true : false;
+    return res;
   } catch (error) {
-    if (error.response?.status === 401 && callFrom==="cart") {
+    if (error.response?.status === 401 && callFrom === "cart") {
       alert("You need to login again.");
-      Cookies.remove('Authorization'); // Clear the authorization cookie
-      window.location = '/login'; // Redirect to the login page
+      Cookies.remove("Authorization"); // Clear the authorization cookie
+      window.location = "/login"; // Redirect to the login page
     }
     console.error("Token validation error:", error.response?.status);
   }
@@ -68,12 +69,12 @@ export const logout = async () => {
   try {
     const response = await axios.delete(LOGOUT_API, {
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': Cookies.get('Authorization'),
-      }
+        "Content-Type": "application/json",
+        Authorization: Cookies.get("Authorization"),
+      },
     });
 
-    console.log("Token is:", Cookies.get('Authorization'));
+    console.log("Token is:", Cookies.get("Authorization"));
     console.log("Logout action response:", response);
     localStorage.removeItem("userName");
     localStorage.removeItem("userEmail");
@@ -81,6 +82,8 @@ export const logout = async () => {
     return response.data;
   } catch (error) {
     console.error("Logout error:", error.response?.data);
-    throw new Error(error.response?.statusText || 'Network response was not ok');
+    throw new Error(
+      error.response?.statusText || "Network response was not ok"
+    );
   }
 };

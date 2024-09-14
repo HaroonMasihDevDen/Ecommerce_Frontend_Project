@@ -5,6 +5,8 @@ import Cookies from 'js-cookie';
 import { validateToken } from '../api/auth';
 import { addToCart } from '../api/cart';
 import { checkIfUserAuthAndNavigate } from '../service/authUser';
+import Navbar from './Navbar';
+
 
 const ProductDetailsPage = () => {
     const [quantity, setQuantity] = useState(1);
@@ -73,6 +75,7 @@ const ProductDetailsPage = () => {
 
     return (
         <>
+            <Navbar />
             {product != [] && product != undefined && (<div>
                 <section className="py-5">
                     <div className="container mx-auto px-4">
