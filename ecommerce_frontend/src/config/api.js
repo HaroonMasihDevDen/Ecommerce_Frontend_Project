@@ -10,6 +10,9 @@ export const VALIDATE_TOKEN_API = getApiUrl("/validate_token");
 // category.js
 export const CATEGORIES_API = getApiUrl("/categories");
 export const CATEGORIES_BY_ID_API = getApiUrl("/category_products");
+export const CATEGORIES_BY_IDs_API = getApiUrl(
+	"/category_products/category_products_with_multiple_category_ids"
+);
 
 // product.js
 export const PRODUCTS_API = getApiUrl("/products");

@@ -4,7 +4,7 @@ import ProductAndCategoryGrid from '../Components/ProductAndCategoryGrid';
 export default function Home() {
   return (
     <>
-      <div className='navbar'>
+      <div className='navbar' style={{ fontFamily: 'HelveticaNowMTText', fontWeight: 400 }}>
         <Navbar />
       </div>
       <div className="header">

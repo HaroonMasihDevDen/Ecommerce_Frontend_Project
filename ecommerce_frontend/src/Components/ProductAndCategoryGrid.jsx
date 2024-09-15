@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { getCategories, getCategoriesByID } from '../api/category';
 import ProductCard from './ProductCard';
-import CategoryCard from './CategoryNestedList';
 import Categories from './Categories';
 import { getProducts } from '../api/product';
 
@@ -29,8 +28,9 @@ const ProductAndCategoryGrid = () => {
       console.log("categoryItems:::", products);
    };
 
-   const searchProductOfThisCategory = async (catg_id) => {
-      const products = await getCategoriesByID(catg_id);
+   const searchProductOfThisCategory = async (catg_ids) => {
+
+      const products = await getCategoriesByID(catg_ids);
       setProductItems(products);
    };
 
@@ -38,7 +38,7 @@ const ProductAndCategoryGrid = () => {
       <>
 
          <div className="flex w-[100%] h-[100%] px-6" >
-            <div className="category w-[30%]">
+            <div className="category w-[25%]">
                <Categories categoryItems={categoryItems} searchProductOfThisCategory={searchProductOfThisCategory} />
             </div>
 
@@ -53,7 +53,6 @@ const ProductAndCategoryGrid = () => {
                      )))}
                </div>
             </div>
-
          </div >
       </>
    );
