@@ -77,9 +77,8 @@ const CartTable = ({
 
 
   return (
-    <section className="hidden h-[600px] w-full max-w-[1200px] grid-cols-1 gap-3 px-5 pb-10 md:grid">
-      {/* Desktop cart table */}
-      <table className="table-fixed">
+    <section className="gap-2 flex p-1 max-w-[1200px]">
+      <table className="table-auto w-full">
         <thead className="h-16 bg-neutral-100">
           <tr>
             <th>ITEM</th>

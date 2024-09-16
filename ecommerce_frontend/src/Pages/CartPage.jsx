@@ -132,59 +132,72 @@ const CartPage = () => {
   return (
     <>
       <Navbar></Navbar>
-      <div className='flex justify-center'>
-        <section className="container ms-12 flex-grow max-w-[1300px] border-b py-5 lg:flex lg:flex-row lg:py-10">
+      <div className=''>
+        <section className="bg-white justify-center px-12 w-full border-b py-5 lg:py-10">
           {cartItems && cartItems.length > 0 && quantities.length > 0 ? (
-            <CartTable
-              products={cartItems}
-              quantities={quantities}
-              updateQuantity={updateQuantity}
-              removeItem={removeItem}
-            />
+            <>
+              <div className='w-full grid grid-cols-[2fr_1fr]'>
+                <div className='w-full'>
+
+                  <CartTable
+                    products={cartItems}
+                    quantities={quantities}
+                    updateQuantity={updateQuantity}
+                    removeItem={removeItem}
+                  />
+                </div>
+                <div>
+                  <section className="mx-auto w-full bg-neutral-100 md:max-w-[400px]">
+                    <div className="w-full">
+                      <div className="border py-5 px-4 shadow-md">
+                        <p className="font-bold">ORDER SUMMARY</p>
+
+                        <div className="flex justify-between border-b py-5">
+                          <p>Subtotal</p>
+                          <p>Rs. {subtotal.toFixed(2)}</p> {/* Display updated subtotal */}
+                        </div>
+
+                        <div className="flex justify-between border-b py-5">
+                          <p>Shipping</p>
+                          <p>Free</p>
+                        </div>
+
+                        <div className="flex justify-between border-b py-5">
+                          <p className='pt-2'>Voucher(if any)</p>
+                          <input type="text" onChange={(e) => setToken(e.target.value)} placeholder='enter token...' className='border rounded-sm ps-2' value={token} />
+                          <button onClick={validate_voucher_token} className='bg-pile-700 text-white p-2 rounded-md' >Apply</button>
+                        </div>
+
+                        <div className="flex justify-between py-5 border-b">
+                          <p>Discount</p>
+                          <p>Rs. {discountAmount_f}</p>
+                        </div>
+
+                        <div className="flex justify-between py-5">
+                          <p>Total</p>
+                          <p>Rs. {totalAmount}</p>
+                        </div>
+
+                        <a href="checkout-address.html">
+                          <button className="w-full bg-pile-700 px-5 py-2 text-white rounded-md">
+                            Proceed to checkout
+                          </button>
+                        </a>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </>
           ) : (
-            <div>No Item</div>
+            <div>
+              No Item In Cart
+            </div>
           )}
 
-          {/* Order summary */}
-          <section className="mx-auto w-full px-4 md:max-w-[400px]">
-            <div className="w-[110%]">
-              <div className="border py-5 px-4 shadow-md">
-                <p className="font-bold">ORDER SUMMARY</p>
 
-                <div className="flex justify-between border-b py-5">
-                  <p>Subtotal</p>
-                  <p>Rs. {subtotal.toFixed(2)}</p> {/* Display updated subtotal */}
-                </div>
 
-                <div className="flex justify-between border-b py-5">
-                  <p>Shipping</p>
-                  <p>Free</p>
-                </div>
 
-                <div className="flex justify-between border-b py-5">
-                  <p className='pt-2'>Voucher(if any)</p>
-                  <input type="text" onChange={(e) => setToken(e.target.value)} placeholder='enter token...' className='border rounded-sm ps-2' value={token} />
-                  <button onClick={validate_voucher_token} className='bg-pile-700 text-white p-2 rounded-md' >Apply</button>
-                </div>
-
-                <div className="flex justify-between py-5 border-b">
-                  <p>Discount</p>
-                  <p>Rs. {discountAmount_f}</p>
-                </div>
-
-                <div className="flex justify-between py-5">
-                  <p>Total</p>
-                  <p>Rs. {totalAmount}</p>
-                </div>
-
-                <a href="checkout-address.html">
-                  <button className="w-full bg-pile-700 px-5 py-2 text-white rounded-md">
-                    Proceed to checkout
-                  </button>
-                </a>
-              </div>
-            </div>
-          </section>
         </section>
       </div>
     </>

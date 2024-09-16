@@ -107,6 +107,19 @@ export default function Navbar() {
                            {isUserLoggedIn === true ? (
                               <>
                                  <li>
+                                    <div className=''>
+                                       <span className='relative bg-blue-300'>
+                                          {/* <span className='ms-1 text-xs absolute text-gray-900 px-1 rounded-full bg-red-200'>
+
+                                            </span> */}
+                                          <span>
+                                             <BiShoppingBag className='text-3xl text-pile-50 cursor-pointer' onClick={() => { window.location = "/cart" }} />
+                                          </span>
+
+                                       </span>
+                                    </div>
+                                 </li>
+                                 <li>
                                     <div className="flex items-center lg:order-2">
                                        {/* <button type="button" className="hidden sm:inline-flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"><svg aria-hidden="true" className="mr-1 -ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg> New Widget</button> */}
                                        <button id="toggleSidebarMobileSearch" type="button" className="p-2 text-gray-500 rounded-lg lg:hidden hover:text-gray-900 hover:bg-green-400 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
@@ -117,7 +130,7 @@ export default function Navbar() {
                                           </svg>
                                        </button>
 
-                                       <button type="button" onClick={openUserPanel} className="flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
+                                       <button type="button" onClick={openUserPanel} className="flex text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
                                           <span className="sr-only">Open user menu</span>
                                           <img className="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo" />
                                        </button>
@@ -176,23 +189,8 @@ export default function Navbar() {
                                           </ul>
                                        </div>
                                     </div>
-
-
-
                                  </li>
-                                 <li><div className=' me-4'>
-                                    <span className='relative bg-blue-300'>
-                                       {/* <span className='ms-1 text-xs absolute text-gray-900 px-1 rounded-full bg-red-200'>
-
-                                            </span> */}
-                                       <span>
-                                          <BiShoppingBag className='text-3xl text-pile-50 cursor-pointer' onClick={() => { window.location = "/cart" }} />
-                                       </span>
-
-                                    </span>
-                                 </div></li>
                               </>
-
                            ) : (
                               <>
                                  <li>
