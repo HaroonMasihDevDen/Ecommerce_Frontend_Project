@@ -12,7 +12,8 @@ const Categories = ({ categoryItems = null, searchProductOfThisCategory }) => {
       <>
          <div className="categoryList flex flex-col justify-center align-center h-fit rounded-md shadow-lg px-4 bg-white m-4">
             <div className='bg-pile-300 text-center w-[80%] mx-auto  text-white text-2xl py-3 rounded-es-lg rounded-ee-lg'
-               style={{ fontFamily: 'HelveticaNowMTText', fontWeight: 400 }}>
+            // style={{ fontFamily: 'HelveticaNowMTText', fontWeight: 400 }}
+            >
                {/* style={{ fontFamily: 'Roboto, sans-serif' }}> */}
                Category
             </div>
@@ -27,7 +28,7 @@ const Categories = ({ categoryItems = null, searchProductOfThisCategory }) => {
                   )
                }
             </div>
-         </div>
+         </div >
       </>
    );
 };

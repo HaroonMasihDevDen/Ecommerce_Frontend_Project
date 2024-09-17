@@ -81,7 +81,8 @@ export default function Navbar() {
                   </div>
                   <div className='flex' >
                      <div className=''>
-                        <ul className='bg-transparent font-medium text-lg text-white flex flex-row gap-x-10 py-1' style={{ fontFamily: 'Helvetica' }}>
+                        {/* <ul className='bg-transparent font-medium text-lg text-white flex flex-row gap-x-10 py-1' style={{ fontFamily: 'Helvetica' }}> */}
+                        <ul className='bg-transparent font-medium text-lg text-white flex flex-row gap-x-10 py-1'>
                            <li>
                               <button className='text-white transition-all ease-in-out hover:border-b' onClick={() => { window.location = "/" }}>
                                  Home

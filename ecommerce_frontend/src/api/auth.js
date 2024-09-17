@@ -1,6 +1,11 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import { LOGIN_API, LOGOUT_API, VALIDATE_TOKEN_API } from "../config/api";
+import {
+	LOGIN_API,
+	LOGOUT_API,
+	VALIDATE_TOKEN_API,
+	REGISTER_API, // Add the registration API URL here
+} from "../config/api";
 
 // Function to handle user login
 export const login = async (userData) => {
@@ -37,6 +42,46 @@ export const login = async (userData) => {
 	}
 };
 
+// Function to handle user registration
+export const register = async (userData) => {
+	try {
+		console.log(
+			"Registration function is calling.....",
+			REGISTER_API,
+			userData
+		);
+		const response = await axios.post(REGISTER_API, userData, {
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+
+		console.log("Registration response:", response.data);
+
+		// Assuming the token is in the 'Authorization' header
+		const token = response.headers["authorization"];
+		if (token) {
+			Cookies.set("Authorization", token); // Store the token in cookies
+			alert("Session token stored in Cookies successfully");
+			const userName = response.data.status.data.user.name;
+			const userEmail = response.data.status.data.user.email;
+			// Store user details in localStorage
+			localStorage.setItem("userName", userName);
+			localStorage.setItem("userEmail", userEmail);
+		} else {
+			alert("Authorization is missing in response headers");
+		}
+
+		alert("User successfully registered");
+		return response.data;
+	} catch (error) {
+		console.error("Error during registration:", error.response?.data);
+		alert(error.response?.data?.message || "Network response was not ok");
+		throw new Error("Network response was not ok");
+	}
+};
+
+// Function to validate user token
 export const validateToken = async (callFrom) => {
 	try {
 		const response = await axios.get(VALIDATE_TOKEN_API, {
