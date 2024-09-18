@@ -5,12 +5,13 @@ import { BiShoppingBag } from "react-icons/bi";
 import Cookies from "js-cookie";
 
 
-export default function Navbar() {
+export default function Navbar({ searchProducts }) {
    const [isUserPanelOpen, setIsUserPanelOpen] = useState(false);
    const [isUserLoggedIn, setIUserLoggedIn] = useState(false);
    const userDropdownRef = useRef(null);
    const [userName, setUserName] = useState(null);
    const [userEmail, setUserEmail] = useState(null);
+   const [searchQuery, setSearchQuery] = useState("");
 
    const validateTokenForCheckUserSession = async () => {
       const res = await validateToken();
@@ -24,9 +25,7 @@ export default function Navbar() {
          setUserEmail(null);
          setIUserLoggedIn(false);
       }
-
    };
-
 
    const openUserPanel = () => {
       setIsUserPanelOpen(true);
@@ -43,7 +42,7 @@ export default function Navbar() {
 
    useEffect(() => {
       validateTokenForCheckUserSession();
-   });
+   }, []);
 
    const showCategoriesInNavBar = () => {
       alert("show categories in navigation bar");
@@ -57,6 +56,11 @@ export default function Navbar() {
       alert("User Log Out Successfully");
    };
 
+   const handleSearch = (e) => {
+      e.preventDefault(); // Prevent page refresh
+      searchProducts(searchQuery);
+   };
+
    return (
       <div>
          <header className="antialiased">
@@ -68,14 +72,20 @@ export default function Navbar() {
                         {/* <img src="/logo1.png" className="mr-3 h-8" alt="Aurora Logo" /> */}
                         <span className="self-center text-3xl font-semibold whitespace-nowrap dark:text-white" style={{ fontFamily: 'cursive' }}>Aurora</span>
                      </a>
-                     <form action="#" method="GET" className="hidden lg:block lg:pl-2">
+                     <form className="hidden lg:block lg:pl-2">
                         <label htmlFor="topbar-search" className="sr-only">Search</label>
 
                         <div className="relative mt-1 lg:w-96">
                            <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                               <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20"> <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" /> </svg>
                            </div>
-                           <input type="text" name="product" id="topbar-search" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-9 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search" />
+                           <input type="text" onChange={(e) => setSearchQuery(e.target.value)} name="product" id="topbar-search" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-9 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search" />
+                           <button type='button'
+                              className='absolute bg-neutral-300 text-black rounded-r-lg  px-2 overflow-x-hidden inset-y-0 right-0 flex items-center'
+                              onClick={(e) => handleSearch(e)}
+                           >
+                              Search
+                           </button>
                         </div>
                      </form>
                   </div>
@@ -129,7 +139,9 @@ export default function Navbar() {
                                           <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                                           </svg>
+
                                        </button>
+
 
                                        <button type="button" onClick={openUserPanel} className="flex text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
                                           <span className="sr-only">Open user menu</span>

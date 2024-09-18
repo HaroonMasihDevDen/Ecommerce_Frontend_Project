@@ -1,13 +1,52 @@
+import React, { useEffect, useState } from 'react'
 import Navbar from '../Components/Navbar';
 import ProductAndCategoryGrid from '../Components/ProductAndCategoryGrid';
+import { getCategories, getCategoriesByID } from '../api/category';
+import { getProducts, searchProductsApi } from '../api/product';
 
 export default function Home() {
+  const [categoryItems, setCategoryItems] = useState(null);
+  const [productItems, setProductItems] = useState(null);
+
+  useEffect(() => {
+    fetchCategories();
+    fetchProducts();
+  }, [0]);
+
+  const fetchCategories = async () => {
+    const categories = await getCategories();
+    setCategoryItems(categories);
+    console.log("categoryItems:::", categories);
+  };
+
+  const fetchProducts = async () => {
+    const products = await getProducts();
+    console.log("products:::", products);
+
+    setProductItems(products);
+    console.log("categoryItems:::", products);
+  };
+
+  const searchProductOfThisCategory = async (catg_ids) => {
+    const products = await getCategoriesByID(catg_ids);
+    setProductItems(products);
+  };
+
+  const searchProducts = async (query) => {
+    console.log(query);
+    alert(query);
+    if (!query) {
+      return;
+    }
+    alert(1);
+    const products = await searchProductsApi(query);
+    setProductItems(products);
+  };
+
   return (
     <>
-      <div className='navbar'
-      // style={{ fontFamily: 'HelveticaNowMTText', fontWeight: 400 }}
-      >
-        <Navbar />
+      <div className='navbar'>
+        <Navbar searchProducts={searchProducts} />
       </div>
       <div className="header">
         this is the headers
@@ -15,7 +54,7 @@ export default function Home() {
       <div className="p-4 h-[70rem]">
 
         <div className='ProductAndCategoryGrid h-[100%] w-full p-3 '>
-          <ProductAndCategoryGrid></ProductAndCategoryGrid>
+          <ProductAndCategoryGrid productItems={productItems} categoryItems={categoryItems} searchProductOfThisCategory={searchProductOfThisCategory}></ProductAndCategoryGrid>
         </div>
       </div>
 

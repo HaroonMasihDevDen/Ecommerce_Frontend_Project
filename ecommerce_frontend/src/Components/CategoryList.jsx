@@ -25,34 +25,42 @@ const CategoryList = ({ items = [], searchProductOfThisCategory }) => {
    }, [checkedItems])
 
    return (
-      <ul className="text-start flex flex-col"
+      <ul className="text-start flex flex-col w-full"
          // style={{ fontFamily: 'HelveticaNowMTText', fontWeight: 400 }}>
          style={{ fontFamily: 'Helvetica', fontWeight: 400 }}>
          {items.length > 0 && items.map((item, index) => (
             <li
                key={item.id}
-               className="text-start ps-4 pt-2 w-full justify-center align-center"
+               className="text-start ps-4 pt-2 w-full flex justify-center align-center"
                onClick={() => handleToggle(item.id)}
             >
-               <button className='w-full flex justify-between'>
-                  <div>
+               <button className='w-full mr-8 justify-center grid grid-cols-4 gap-4 '>
+
+                  <span className='text-right'>
+                     <input
+                        type="radio"
+                        className='w-4 h-4'
+                        checked={checkedItems[item.id] || false}
+                        readOnly
+                     />
+                  </span>
+                  <span className='text-left'>
                      <h3
                         className='text-xl capitalize'
                         title={item.description}
                      >
                         {item.title}
                      </h3>
-                  </div>
-                  <div>
-                     <span>
-                        <input
-                           type="checkbox"
-                           className='w-4 h-4'
-                           checked={checkedItems[item.id] || false}
-                           readOnly
-                        />
-                     </span>
-                  </div>
+                  </span>
+                  {/* <div className='text-left'>
+                     <h3
+                        className='text-xl capitalize'
+                        title={item.description}
+                     >
+                        {item.title}
+                     </h3>
+                  </div> */}
+
                </button>
             </li>
          ))}
