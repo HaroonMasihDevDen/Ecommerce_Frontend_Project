@@ -3,6 +3,7 @@ import {
 	PRODUCTS_API,
 	PRODUCT_DETAILS_API,
 	SEARCH_PRODUCT_API,
+	FILTER_PRODUCT_API,
 } from "../config/api";
 
 export const getProducts = async () => {
@@ -47,6 +48,26 @@ export const searchProductsApi = async (query) => {
 		const response = await axios.get(`${SEARCH_PRODUCT_API}`, {
 			params: {
 				query: query,
+			},
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+
+		return response.data;
+	} catch (error) {
+		console.error("Error searching product :", error.response?.data);
+		throw new Error(error.response?.statusText || "search product failed");
+	}
+};
+
+export const applyFiltersOnProducts = async (sizes, min_price, max_price) => {
+	try {
+		const response = await axios.get(`${FILTER_PRODUCT_API}`, {
+			params: {
+				sizes: sizes,
+				min_price: min_price,
+				max_price: max_price,
 			},
 			headers: {
 				"Content-Type": "application/json",

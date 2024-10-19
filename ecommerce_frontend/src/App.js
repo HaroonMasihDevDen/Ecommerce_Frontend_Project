@@ -18,6 +18,7 @@ function App() {
 			<Router>
 				<div className="App">
 					<Routes>
+						{/* <Route path="/" element={<Temp />} /> */}
 						<Route path="/" element={<Home />} />
 						<Route path="/login" element={<Login />} />
 						<Route path="/register" element={<Register />} />

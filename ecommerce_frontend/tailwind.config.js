@@ -13,6 +13,40 @@ module.exports = {
 	content: ["./src/**/*.{js,jsx,ts,tsx}"],
 	theme: {
 		extend: {
+			fontFamily: {
+				sans: [
+					"ui-sans-serif",
+					"system-ui",
+					"-apple-system",
+					"BlinkMacSystemFont",
+					'"Segoe UI"',
+					"Roboto",
+					'"Helvetica Neue"',
+					"Arial",
+					"sans-serif",
+				],
+
+				poppins: ["Poppins", "sans-serif"],
+				"ui-sans": ["ui-sans-serif", "system-ui", "sans-serif"],
+				roboto: ["Roboto", "sans-serif"],
+				inter: ["Inter", "sans-serif"],
+				montserrat: ["Montserrat", "sans-serif"],
+				lato: ["Lato", "sans-serif"],
+				openSans: ["Open Sans", "sans-serif"],
+				raleway: ["Raleway", "sans-serif"],
+				ubuntu: ["Ubuntu", "sans-serif"],
+				sourceSansPro: ["Source Sans Pro", "sans-serif"],
+				merriweather: ["Merriweather", "serif"],
+				playfairDisplay: ["Playfair Display", "serif"],
+				lora: ["Lora", "serif"],
+				notoSans: ["Noto Sans", "sans-serif"],
+				notoSerif: ["Noto Serif", "serif"],
+				rubik: ["Rubik", "sans-serif"],
+				albert: ["Albert Sans", "sans-serif"],
+			},
+			fontSize: {
+				base: ["16px", { lineHeight: "1.5" }], // Default font size set to 16px
+			},
 			colors: {
 				pile: {
 					50: "#e0f0f0",

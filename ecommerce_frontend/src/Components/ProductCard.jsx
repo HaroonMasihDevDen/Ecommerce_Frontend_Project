@@ -6,8 +6,8 @@ const ProductCard = ({ product }) => {
     };
 
     return (
-        <div className="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-2">
-            <div className='h-[20rem] w-80'>
+        <div className="bg-gray-100 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-2">
+            <div className='h-[15rem] w-80'>
 
                 <a href="#" className="relative h-[100%]">
                     <img className="rounded-t-lg h-full" src={product.imageUrl} alt={product.name} />

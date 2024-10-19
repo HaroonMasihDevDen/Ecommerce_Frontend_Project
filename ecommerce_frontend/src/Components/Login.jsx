@@ -52,10 +52,10 @@ export default function Login() {
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
               <form onSubmit={handleLogin} method="POST" className="space-y-6">
-                <div>
+                <div className="grid gap-0">
                   <label
                     htmlFor="email"
-                    className="block text-sm font-medium leading-6 text-gray-900"
+                    className="text-sm text-start font-medium leading-6 text-gray-900"
                   >
                     Email address
                   </label>

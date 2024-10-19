@@ -19,6 +19,7 @@ export const CATEGORIES_BY_IDs_API = getApiUrl(
 export const PRODUCTS_API = getApiUrl("/products");
 export const PRODUCT_DETAILS_API = getApiUrl("/products");
 export const SEARCH_PRODUCT_API = getApiUrl("/products/search");
+export const FILTER_PRODUCT_API = getApiUrl("/products/filter");
 
 // cart.js
 export const STORE_IN_CART_API = getApiUrl("/cart_items");
