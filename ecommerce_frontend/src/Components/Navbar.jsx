@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { validateToken } from '../api/auth';
-import CategoryCard from './CategoryNestedList';
 import { BiShoppingBag, BiUser, BiCart } from "react-icons/bi";
 import Cookies from "js-cookie";
 

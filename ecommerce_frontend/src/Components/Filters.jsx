@@ -44,14 +44,16 @@ const Filters = () => {
             <div className="grid grid-cols-2 gap-2">
                {sizes.map((size) => (
                   <label key={size} className="inline-flex items-center">
-                     <input
-                        type="radio"
-                        className="w-4 h-4 "
+                     <button
+                        type="button"
+                        className={`${selectedSizes.includes(size) ? 'bg-pile-50' : 'bg-pile-300'} px-3 py-1 rounded-md`}
                         style={{ accentColor: 'green' }}
-                        checked={selectedSizes.includes(size)}
                         onClick={() => handleSizeChange(size)}
-                     />
-                     <span className="ml-2">{size}</span>
+
+                     >
+                        {size}
+                     </button>
+                     {/* <span className="ml-2">{size}</span> */}
                   </label>
                ))}
             </div>

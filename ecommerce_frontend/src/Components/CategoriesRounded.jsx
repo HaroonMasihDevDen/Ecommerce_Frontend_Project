@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const CategoryList = ({ items = [], searchProductOfThisCategory }) => {
+function CategoryList({ categoryItems = [], searchProductOfThisCategory }) {
    // State to keep track of which items are checked
    const [checkedItems, setCheckedItems] = useState({ 0: true });
 
@@ -22,17 +22,14 @@ const CategoryList = ({ items = [], searchProductOfThisCategory }) => {
          return;
       }
       callbackFunction(catg_ids);
-   }, [checkedItems])
+   }, [checkedItems]);
 
    return (
       <>
-         <div className='shadow-inner shadow-slate-300 bg-gray-100 p-6'>
-            <div>
-               <h2 className='font-bold text-md mb-2'>Category</h2>
-            </div>
+         <div className='bg-red-200'>
             <div>
                <ul className="text-start flex flex-col w-full">
-                  {items.length > 0 && items.map((item, index) => (
+                  {categoryItems.length > 0 && categoryItems.map((item, index) => (
                      <li
                         key={item.id}
                         className="text-start ps-4 pt-2 w-full flex justify-center align-center"
@@ -46,8 +43,7 @@ const CategoryList = ({ items = [], searchProductOfThisCategory }) => {
                                  className='w-4 h-4'
                                  style={{ accentColor: 'green' }}
                                  checked={checkedItems[item.id] || false}
-                                 readOnly
-                              />
+                                 readOnly />
                            </span>
                            <span className='text-left'>
                               <h3
@@ -58,23 +54,14 @@ const CategoryList = ({ items = [], searchProductOfThisCategory }) => {
                                  {item.title}
                               </h3>
                            </span>
-                           {/* <div className='text-left'>
-                     <h3
-                        className='text-xl capitalize'
-                        title={item.description}
-                     >
-                        {item.title}
-                     </h3>
-                  </div> */}
-
                         </button>
                      </li>
                   ))}
-               </ul >
+               </ul>
             </div>
          </div>
       </>
    );
-};
+}
 
 export default CategoryList;

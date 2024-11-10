@@ -29,7 +29,7 @@ const Carousel = () => {
     };
 
     return (
-        <div className="carousel mx-5 w-[70%] h-[68vh] border-2 rounded-md overflow-hidden relative">
+        <div className="carousel mx-5 w-[70%] h-[68vh] border-2 border-blue-50 rounded-md overflow-hidden relative">
             <div
                 className="carousel-inner flex transition-transform ease-in-out"
                 style={{
