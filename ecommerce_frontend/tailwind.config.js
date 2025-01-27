@@ -60,6 +60,55 @@ module.exports = {
 					800: "#005454",
 					900: "#003c3c",
 				},
+				primary: {
+					light: "var(--color-primary-light)",
+					DEFAULT: "var(--color-primary)",
+					dark: "var(--color-primary-dark)",
+				},
+				secondary: {
+					light: "var(--color-secondary-light)",
+					DEFAULT: "var(--color-secondary)",
+					dark: "var(--color-secondary-dark)",
+				},
+				accent: {
+					light: "var(--color-accent-light)",
+					DEFAULT: "var(--color-accent)",
+					dark: "var(--color-accent-dark)",
+				},
+			},
+			textColor: {
+				primary: {
+					light: "var(--color-primary-light)",
+					DEFAULT: "var(--color-primary)",
+					dark: "var(--color-primary-dark)",
+				},
+				secondary: {
+					light: "var(--color-secondary-light)",
+					DEFAULT: "var(--color-secondary)",
+					dark: "var(--color-secondary-dark)",
+				},
+				accent: {
+					light: "var(--color-accent-light)",
+					DEFAULT: "var(--color-accent)",
+					dark: "var(--color-accent-dark)",
+				},
+			},
+			accentColor: {
+				primary: {
+					light: "var(--color-primary-light)",
+					DEFAULT: "var(--color-primary)",
+					dark: "var(--color-primary-dark)",
+				},
+				secondary: {
+					light: "var(--color-secondary-light)",
+					DEFAULT: "var(--color-secondary)",
+					dark: "var(--color-secondary-dark)",
+				},
+				accent: {
+					light: "var(--color-accent-light)",
+					DEFAULT: "var(--color-accent)",
+					dark: "var(--color-accent-dark)",
+				},
 			},
 			keyframes: {
 				"fade-in": {

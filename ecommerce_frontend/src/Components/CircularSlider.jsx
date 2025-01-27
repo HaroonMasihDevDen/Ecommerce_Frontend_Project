@@ -63,7 +63,7 @@ const CircularSlider = () => {
                                 key={index}
                                 onClick={() => goToSlide(index)}
                                 className={`w-2.5 h-2.5 rounded-full transition-colors 
-                                    ${currentIndex === index ? 'bg-black' : 'bg-black/40'}`}
+                                    ${currentIndex === index ? 'bg-primary-dark' : 'bg-primary-light'}`}
                             />
                         ))}
                     </div>

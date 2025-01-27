@@ -122,8 +122,17 @@ export default function Home() {
 
                 <div className='left_top flex flex-col pt-16 pb-6 justify-center items-center'>
                   <h className='text-4xl font-albert'>Unleash Your Inner Style</h>
-                  <p>Trendy, bold, and made for you</p>
-                  <button className='btn p-2 mt-4 bg-blue-300 rounded-md w-fit'>New Arrivals</button>
+                  <p className='py-4'>Trendy, bold, and made for you</p>
+                  {/* <button className='btn p-2 mt-4 bg-blue-300 rounded-md w-fit'>New Arrivals</button>
+                   */}
+                  <div className='flex gap-4 animate-fadeIn delay-300'>
+                    <button className='px-6 py-3 bg-primary-light text-white rounded-full transition-all hover:bg-primary active:bg-primary-dark'>
+                      New Arrivals
+                    </button>
+                    <button className='px-6 py-3 border-2 border-primary-light rounded-full hover:bg-primary-light hover:text-white transition-all active:bg-primary'>
+                      Shop Collection
+                    </button>
+                  </div>
                 </div>
               </div>
               <div className='right_hero relative w-[100%] h-full flex justify-center items-center'>
