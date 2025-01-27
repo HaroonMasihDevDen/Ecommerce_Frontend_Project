@@ -1,6 +1,5 @@
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import ProductCard from './ProductCard';
-import ProductCard2 from './ProductCard2';
 import Categories from './Categories';
 import Filters from './Filters';
 
@@ -22,8 +21,7 @@ const ProductAndCategoryGrid = ({ productItems, categoryItems, searchProductOfTh
                   productItems.map(product => (
                      // product.imageUrl = 'https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb',
                      product.imageUrl = 'https://picsum.photos/200/300?random=1',
-                     // <ProductCard key={product.id} product={product} />
-                     <ProductCard2 key={product.id} product={product} />
+                     <ProductCard key={product.id} product={product} />
                   )))}
             </div>
          </div>

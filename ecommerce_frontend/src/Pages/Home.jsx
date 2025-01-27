@@ -116,7 +116,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className='mx-8 h-[95%] backdrop-blur-lg border border-white/10 rounded-lg shadow-2xl p-0'>
+          <div className='mx-8 h-[95%] border border-white/10 rounded-lg shadow-2xl p-0'>
             <div className='parent_hero grid grid-cols-2 w-full h-full'>
               <div className='left_hero  w-[100%] flex justify-center items-center'>
 

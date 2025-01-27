@@ -10,7 +10,7 @@ import "./index.css";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
 	<React.StrictMode>
-		<div className="text-[#444]">
+		<div className="text-[#444] w-[100vw]">
 			<App />
 		</div>
 	</React.StrictMode>
