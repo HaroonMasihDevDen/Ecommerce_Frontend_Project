@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function CategoryList({ categoryItems = [], searchProductOfThisCategory }) {
+export default function CategoryList({ categoryList = [], searchProductOfThisCategory }) {
    // State to keep track of which items are checked
    const [checkedItems, setCheckedItems] = useState({ 0: true });
 
@@ -26,13 +26,13 @@ function CategoryList({ categoryItems = [], searchProductOfThisCategory }) {
 
    return (
       <>
-         {/* <div className='shadow-inner shadow-slate-300 bg-gray-100 p-6'>
+         <div className='shadow-inner shadow-slate-300 bg-gray-100 p-6'>
             <div>
                <h2 className='font-bold text-md mb-2'>Category</h2>
             </div>
             <div>
                <ul className="text-start flex flex-col w-full">
-                  {categoryItems.length > 0 && categoryItems.map((item, index) => (
+                  {categoryList.length > 0 && categoryList.map((item, index) => (
                      <li
                         key={item.id}
                         className="text-start ps-4 pt-2 w-full flex justify-center align-center"
@@ -62,9 +62,7 @@ function CategoryList({ categoryItems = [], searchProductOfThisCategory }) {
                   ))}
                </ul>
             </div>
-         </div> */}
+         </div>
       </>
    );
 }
-
-export default CategoryList;

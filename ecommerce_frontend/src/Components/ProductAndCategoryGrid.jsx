@@ -1,17 +1,17 @@
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import ProductCard from './ProductCard';
-import Categories from './Categories';
+import CategoryList from './CategoryList';
 import Filters from './Filters';
 
-const ProductAndCategoryGrid = ({ productItems, categoryItems, searchProductOfThisCategory }) => {
+export default function ProductAndCategoryGrid({ productItems, categoryItems, searchProductOfThisCategory }) {
    return (
       <div className="flex w-[100%] px-6" >
          <div className="category w-[20%] p-4">
             <div>
-               <Categories categoryItems={categoryItems} searchProductOfThisCategory={searchProductOfThisCategory} />
+               {/* <CategoryList categoryList={categoryItems} searchProductOfThisCategory={searchProductOfThisCategory} /> */}
             </div>
             <div>
-               <Filters />
+               <Filters categoryList={categoryItems || []} searchProductOfThisCategory={searchProductOfThisCategory} />
             </div>
          </div>
 
@@ -29,4 +29,4 @@ const ProductAndCategoryGrid = ({ productItems, categoryItems, searchProductOfTh
    );
 };
 
-export default ProductAndCategoryGrid;
+
