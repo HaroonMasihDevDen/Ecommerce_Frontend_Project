@@ -62,7 +62,7 @@ export default function Navbar({ searchProducts }) {
 
    return (
       // <div className='font-sans font-normal' style={{ fontSize: '16px' }}>
-      <div className='relative'>
+      <div className=''>
          <header className="antialiased">
             <nav className="border-gray-200 px-4 lg:px-6 py-2 dark:bg-gray-800">
                {/* <div className="parent hidden flex justify-between items-center w-full">

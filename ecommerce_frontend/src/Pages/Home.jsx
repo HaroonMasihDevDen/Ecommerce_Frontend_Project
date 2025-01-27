@@ -49,11 +49,11 @@ export default function Home() {
   return (
     <>
       <div className=''>
-        <div className='absolute w-[97vw]'>
+        <div className='sticky top-0 z-50 bg-gradient-to-r  from-[#FDE9E0] via-white to-[#cfebf3] w-[100vw]'>
           <Navbar searchProducts={searchProducts} />
         </div>
-        <div className="header w-[100%] h-[100vh] bg-[#ebdfbec6] pt-[5rem] bg-gradient-to-r from-[#FDE9E0] via-white to-[#cfebf3]">
 
+        <div className="w-[100%] h-[100vh] bg-[#ebdfbec6] bg-gradient-to-r from-[#FDE9E0] via-white to-[#cfebf3]">
           <div className=' hidden grid grid-cols-2 w-[100%]'>
             <div className='left_div grid grid-cols-1'>
               <div className='left_top flex flex-col pt-16 pb-6 justify-center items-center'>
@@ -116,7 +116,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className=' my-4 mx-8 h-[95%] bg-white/20 backdrop-blur-lg border border-white/10 rounded-lg shadow-2xl p-0'>
+          <div className='mx-8 h-[95%] backdrop-blur-lg border border-white/10 rounded-lg shadow-2xl p-0'>
             <div className='parent_hero grid grid-cols-2 w-full h-full'>
               <div className='left_hero  w-[100%] flex justify-center items-center'>
 
@@ -142,11 +142,12 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="p-4 h-[70rem]">
-          <div className='ProductAndCategoryGrid h-[100%] w-full p-3 '>
+        <div className="p-4">
+          <div className='w-full p-3'>
             <ProductAndCategoryGrid productItems={productItems} categoryItems={categoryItems} searchProductOfThisCategory={searchProductOfThisCategory}></ProductAndCategoryGrid>
           </div>
         </div>
+        <div>this is the footer</div>
       </div>
     </>
   );

@@ -37,7 +37,7 @@ const Filters = () => {
    }
 
    return (
-      <div className="p-6 mt-6  shadow-inner shadow-slate-300 bg-gray-50">
+      <div className="p-6 mt-6 shadow-inner bg-gray-50 shadow-slate-300">
          {/* Sizes Filter */}
          <div className="mb-6">
             <h2 className="font-bold text-lg mb-2">Sizes</h2>
