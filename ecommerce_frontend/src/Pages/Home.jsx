@@ -5,6 +5,7 @@ import { getCategories, getCategoriesByID } from '../api/category';
 import { getProducts, searchProductsApi } from '../api/product';
 import Carousel from '../Components/Carousel';
 import CategoriesRounded from '../Components/CategoriesRounded';
+import CircularSlider from '../Components/CircularSlider';
 
 export default function Home() {
   const [categoryItems, setCategoryItems] = useState(null);
@@ -115,7 +116,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className=' my-4 mx-8 h-[90%] bg-white/20 backdrop-blur-lg border border-white/10 rounded-lg shadow-2xl p-0'>
+          <div className=' my-4 mx-8 h-[95%] bg-white/20 backdrop-blur-lg border border-white/10 rounded-lg shadow-2xl p-0'>
             <div className='parent_hero grid grid-cols-2 w-full h-full'>
               <div className='left_hero  w-[100%] flex justify-center items-center'>
 
@@ -124,19 +125,15 @@ export default function Home() {
                   <p>Trendy, bold, and made for you</p>
                   <button className='btn p-2 mt-4 bg-blue-300 rounded-md w-fit'>New Arrivals</button>
                 </div>
-
-
               </div>
-              <div className='right_hero relative w-[100%] flex justify-center items-center'>
-                <div className="char1 absolute w-[480px] left-4"><img src="/images/hero_man.png" alt="" className='shadow-2xl' /></div>
-                <div className="char2 absolute w-[480px] right-6"><img src="/images/hero_woman.png" alt="" className='shadow-2xl' /></div>
+              <div className='right_hero relative w-[100%] h-full flex justify-center items-center'>
+                <CircularSlider />
               </div>
             </div>
           </div>
         </div>
 
         <div className="p-4 h-[70rem]">
-
           <div className='ProductAndCategoryGrid h-[100%] w-full p-3 '>
             <ProductAndCategoryGrid productItems={productItems} categoryItems={categoryItems} searchProductOfThisCategory={searchProductOfThisCategory}></ProductAndCategoryGrid>
           </div>
