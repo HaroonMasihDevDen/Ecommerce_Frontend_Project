@@ -15,7 +15,7 @@ const ProductCard = ({ product }) => {
     }
 
     return (
-        <div className="w-[20rem] border dark:bg-gray-800 dark:border-gray-700 m-[4px] mt-8">
+        <div className="w-[17rem] border dark:bg-gray-800 dark:border-gray-700 m-[4px] mt-8">
             <div onClick={() => showProductDetails(product)} className="text-white cursor-pointer">
                 <div className='h-[23rem] w-full'>
 

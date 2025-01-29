@@ -1,50 +1,61 @@
 import React, { useState } from 'react';
 import { applyFiltersOnProducts } from '../api/product';
 
-export default function Filters({ categoryList = [], searchProductOfThisCategory, reAssignProductItems }) {
+export default function Filters({ categoryList = [], reAssignProductItems }) {
    const [selectedSizes, setSelectedSizes] = useState([]);
    const [selectedCategories, setSelectedCategories] = useState([]);
-   const [priceRange, setPriceRange] = useState([0, 500000]);
+   const [minPrice, setMinPrice] = useState();
+   const [maxPrice, setMaxPrice] = useState();
 
    const sizes = ['XS', 'S', 'M', 'L', 'XL', '2XL'];
 
    const handleSizeChange = (size) => {
-      if (selectedSizes.includes(size)) {
-         setSelectedSizes(selectedSizes.filter((s) => s !== size));
-      } else {
-         setSelectedSizes([...selectedSizes, size]);
-      }
+      setSelectedSizes((prevSizes) =>
+         prevSizes.includes(size) ? prevSizes.filter((s) => s !== size) : [...prevSizes, size]
+      );
    };
 
    const handleCategoryChange = (category) => {
-      if (selectedCategories.includes(category)) {
-         setSelectedCategories(selectedCategories.filter((c) => c !== category));
-      } else {
-         setSelectedCategories([...selectedCategories, category]);
-      }
+      setSelectedCategories((prevCategories) =>
+         prevCategories.includes(category) ? prevCategories.filter((c) => c !== category) : [...prevCategories, category]
+      );
    };
 
    const handlePriceChangeLower = (e) => {
-      setPriceRange([+e.target.value, priceRange[1]]);
+      const value = Number(e.target.value);
+      if (value == 0) {
+         setMinPrice();
+      }
+      else {
+         setMinPrice(Number(e.target.value));
+      }
    };
 
    const handlePriceChangeUpper = (e) => {
-      setPriceRange([priceRange[0], +e.target.value]);
+      const value = Number(e.target.value);
+      if (value == 0) {
+         setMaxPrice();
+      }
+      else {
+         setMaxPrice(Number(e.target.value));
+      }
    };
 
-   const resetFilters = () => {
+   const resetFilters = async () => {
       setSelectedSizes([]);
       setSelectedCategories([]);
-      setPriceRange([100, 5000]);
+      setMinPrice();
+      setMaxPrice();
+      reAssignProductItems(await applyFiltersOnProducts(selectedSizes, minPrice, maxPrice, selectedCategories));
+
    };
 
    const applyFilters = async () => {
-      reAssignProductItems(await applyFiltersOnProducts(selectedSizes, priceRange[0], priceRange[1], selectedCategories));
+      reAssignProductItems(await applyFiltersOnProducts(selectedSizes, minPrice, maxPrice, selectedCategories));
    };
 
    return (
       <div className="p-6 mt-6 shadow-inner bg-gray-50 shadow-slate-300 rounded-lg">
-
          {/* Category Filter */}
          <div className="mb-6">
             <h2 className="font-bold text-lg mb-2">Category</h2>
@@ -90,19 +101,14 @@ export default function Filters({ categoryList = [], searchProductOfThisCategory
          {/* Price Range Filter */}
          <div>
             <h2 className="font-bold text-lg mb-2">Price Range</h2>
-            <div className="flex justify-between text-sm mb-4">
-               <span>
-                  <b>Price</b>
-               </span>
-            </div>
             <div className="flex items-center gap-2">
                <div className="flex flex-col">
                   <input
                      type="number"
                      className="w-[5rem] border-2 border-gray-300 p-2 rounded focus:outline-none focus:ring focus:ring-blue-400 focus:border-blue-400"
-                     min="1"
+                     min="0"
                      max="50000"
-                     value={priceRange[0]}
+                     value={minPrice}
                      onChange={handlePriceChangeLower}
                      placeholder="Min"
                   />
@@ -111,9 +117,9 @@ export default function Filters({ categoryList = [], searchProductOfThisCategory
                   <input
                      type="number"
                      className="w-[5rem] border-2 border-gray-300 p-2 rounded focus:outline-none focus:ring focus:ring-blue-400 focus:border-blue-400"
-                     min="1"
+                     min="0"
                      max="50000"
-                     value={priceRange[1]}
+                     value={maxPrice}
                      onChange={handlePriceChangeUpper}
                      placeholder="Max"
                   />
@@ -122,16 +128,10 @@ export default function Filters({ categoryList = [], searchProductOfThisCategory
          </div>
 
          <div className="flex justify-end gap-4 mt-4">
-            <button
-               className="bg-primary-light active:bg-primary text-white px-3 py-1 rounded transition-all"
-               onClick={resetFilters}
-            >
+            <button className="bg-primary-light active:bg-primary text-white px-3 py-1 rounded transition-all" onClick={resetFilters}>
                Reset
             </button>
-            <button
-               className="bg-primary active:bg-primary-dark text-white px-3 py-1 rounded transition-all"
-               onClick={applyFilters}
-            >
+            <button className="bg-primary active:bg-primary-dark text-white px-3 py-1 rounded transition-all" onClick={applyFilters}>
                Apply
             </button>
          </div>
