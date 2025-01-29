@@ -61,13 +61,19 @@ export const searchProductsApi = async (query) => {
 	}
 };
 
-export const applyFiltersOnProducts = async (sizes, min_price, max_price) => {
+export const applyFiltersOnProducts = async (
+	sizes,
+	min_price,
+	max_price,
+	categories
+) => {
 	try {
 		const response = await axios.get(`${FILTER_PRODUCT_API}`, {
 			params: {
 				sizes: sizes,
 				min_price: min_price,
 				max_price: max_price,
+				categories: categories,
 			},
 			headers: {
 				"Content-Type": "application/json",

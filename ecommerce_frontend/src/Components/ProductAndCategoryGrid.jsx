@@ -3,7 +3,7 @@ import ProductCard from './ProductCard';
 import CategoryList from './CategoryList';
 import Filters from './Filters';
 
-export default function ProductAndCategoryGrid({ productItems, categoryItems, searchProductOfThisCategory }) {
+export default function ProductAndCategoryGrid({ productItems, categoryItems, searchProductOfThisCategory, reAssignProductItems }) {
    return (
       <div className="flex w-[100%] px-6" >
          <div className="category w-[20%] p-4">
@@ -11,7 +11,7 @@ export default function ProductAndCategoryGrid({ productItems, categoryItems, se
                {/* <CategoryList categoryList={categoryItems} searchProductOfThisCategory={searchProductOfThisCategory} /> */}
             </div>
             <div>
-               <Filters categoryList={categoryItems || []} searchProductOfThisCategory={searchProductOfThisCategory} />
+               <Filters categoryList={categoryItems || []} searchProductOfThisCategory={searchProductOfThisCategory} reAssignProductItems={reAssignProductItems} />
             </div>
          </div>
 

@@ -46,6 +46,11 @@ export default function Home() {
     setProductItems(products);
   };
 
+  const reAssignProductItems = (products) => {
+    setProductItems(products);
+    // debugger;
+  };
+
   return (
     <>
       <div className=''>
@@ -57,7 +62,7 @@ export default function Home() {
           <div className=' hidden grid grid-cols-2 w-[100%]'>
             <div className='left_div grid grid-cols-1'>
               <div className='left_top flex flex-col pt-16 pb-6 justify-center items-center'>
-                <h className='text-4xl font-albert'>Unleash Your Inner Style</h>
+                <h1 className='text-4xl font-albert'>Unleash Your Inner Style</h1>
                 <p>Trendy, bold, and made for you</p>
                 <button className='btn p-2 mt-4 bg-blue-300 rounded-md w-fit'>New Arrivals</button>
               </div>
@@ -67,43 +72,43 @@ export default function Home() {
                   <img src="https://mdbcdn.b-cdn.net/img/new/avatars/1.webp" alt="men category image"
                     className='border-3 p-4 rounded-full w-[9rem] h-[9rem] text-center'
                   />
-                  <h className="text-md font-albert">Men</h>
+                  <h1 className="text-md font-albert">Men</h1>
                 </div>
                 <div className="cursor-pointer w-[10rem]">
                   <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" alt="men category image"
                     className='border-3 p-4 rounded-full w-[9rem] h-[9rem] text-center'
                   />
-                  <h className="text-md font-albert">Men</h>
+                  <h1 className="text-md font-albert">Men</h1>
                 </div>
                 <div className="cursor-pointer w-[10rem]">
                   <img src="https://mdbcdn.b-cdn.net/img/new/avatars/3.webp" alt="men category image"
                     className='border-3 p-4 rounded-full w-[9rem] h-[9rem] text-center'
                   />
-                  <h className="text-md font-albert">Men</h>
+                  <h1 className="text-md font-albert">Men</h1>
                 </div>
                 <div className="cursor-pointer w-[10rem]">
                   <img src="https://mdbcdn.b-cdn.net/img/new/avatars/4.webp" alt="men category image"
                     className='border-3 p-4 rounded-full w-[9rem] h-[9rem] text-center'
                   />
-                  <h className="text-md font-albert">Men</h>
+                  <h1 className="text-md font-albert">Men</h1>
                 </div>
                 <div className="cursor-pointer w-[10rem]">
                   <img src="https://mdbcdn.b-cdn.net/img/new/avatars/5.webp" alt="men category image"
                     className='border-3 p-4 rounded-full w-[9rem] h-[9rem] text-center'
                   />
-                  <h className="text-md font-albert">Men</h>
+                  <h1 className="text-md font-albert">Men</h1>
                 </div>
                 <div className="cursor-pointer w-[10rem]">
                   <img src="https://mdbcdn.b-cdn.net/img/new/avatars/6.webp" alt="men category image"
                     className='border-3 p-4 rounded-full w-[9rem] h-[9rem] text-center'
                   />
-                  <h className="text-md font-albert">Men</h>
+                  <h1 className="text-md font-albert">Men</h1>
                 </div>
                 <div className="cursor-pointer w-[10rem]">
                   <img src="https://mdbcdn.b-cdn.net/img/new/avatars/7.webp" alt="men category image"
                     className='border-3 p-4 rounded-full w-[9rem] h-[9rem] text-center'
                   />
-                  <h className="text-md font-albert">Men</h>
+                  <h1 className="text-md font-albert">Men</h1>
                 </div>
 
 
@@ -121,7 +126,7 @@ export default function Home() {
               <div className='left_hero  w-[100%] flex justify-center items-center'>
 
                 <div className='left_top flex flex-col pt-16 pb-6 justify-center items-center'>
-                  <h className='text-4xl font-albert'>Unleash Your Inner Style</h>
+                  <h1 className='text-4xl font-albert'>Unleash Your Inner Style</h1>
                   <p className='py-4'>Trendy, bold, and made for you</p>
                   {/* <button className='btn p-2 mt-4 bg-blue-300 rounded-md w-fit'>New Arrivals</button>
                    */}
@@ -144,7 +149,7 @@ export default function Home() {
 
         <div className="p-4">
           <div className='w-full p-3'>
-            <ProductAndCategoryGrid productItems={productItems} categoryItems={categoryItems} searchProductOfThisCategory={searchProductOfThisCategory}></ProductAndCategoryGrid>
+            <ProductAndCategoryGrid productItems={productItems} categoryItems={categoryItems} searchProductOfThisCategory={searchProductOfThisCategory} reAssignProductItems={reAssignProductItems}></ProductAndCategoryGrid>
           </div>
         </div>
         <div>this is the footer</div>

@@ -92,11 +92,11 @@ const ProductDetailsPage = () => {
                                             alt="Main"
                                         />
                                     </div>
-                                    <div className="flex justify-center mb-3">
+                                    <div className="flex justify-center mb-3 cursor-pointer">
                                         {product.base64_images.map((src, index) => (
                                             <img
                                                 key={index}
-                                                className={`w-20 h-20 rounded-lg m-1 ${currentPrevImageIndex === index ? 'border-4 border-blue-500' : ''}`}
+                                                className={`w-20 h-20 rounded-lg m-1 object-cover ${currentPrevImageIndex === index ? 'border-4 border-blue-500' : ''}`}
                                                 src={src}
                                                 alt={`Thumbnail ${index}`}
                                                 onClick={() => setCurrentPrevImageIndex(index)}
@@ -145,6 +145,7 @@ const ProductDetailsPage = () => {
                                                         type="text"
                                                         className="text-center border-none w-20"
                                                         value={quantity}
+                                                        readOnly={true}
                                                     />
                                                     <button onClick={increamentQuantity} className="bg-white border-l border-gray-300 px-4 py-2 flex" type="button">
                                                         <i className="fas fa-plus"></i>

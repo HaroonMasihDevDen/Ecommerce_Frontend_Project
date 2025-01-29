@@ -16,7 +16,7 @@ const ProductCard = ({ product }) => {
 
     return (
         <div className="w-[20rem] border dark:bg-gray-800 dark:border-gray-700 m-[4px] mt-8">
-            <a onClick={() => showProductDetails(product)} className="text-white cursor-pointer">
+            <div onClick={() => showProductDetails(product)} className="text-white cursor-pointer">
                 <div className='h-[23rem] w-full'>
 
                     <a href="#" className="relative h-[100%]">
@@ -42,7 +42,7 @@ const ProductCard = ({ product }) => {
                     </div>
 
                 </div>
-            </a >
+            </div >
         </div>
     )
 };

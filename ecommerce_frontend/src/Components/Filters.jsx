@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
 import { applyFiltersOnProducts } from '../api/product';
 
-export default function Filters({ categoryList = [], searchProductOfThisCategory }) {
-   // State to manage selected sizes
+export default function Filters({ categoryList = [], searchProductOfThisCategory, reAssignProductItems }) {
    const [selectedSizes, setSelectedSizes] = useState([]);
-   // State to manage selected categories
    const [selectedCategories, setSelectedCategories] = useState([]);
-   // State to manage price range
-   const [priceRange, setPriceRange] = useState([100, 5000]);
+   const [priceRange, setPriceRange] = useState([0, 500000]);
 
-   const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+   const sizes = ['XS', 'S', 'M', 'L', 'XL', '2XL'];
 
-   // Handle size selection
    const handleSizeChange = (size) => {
       if (selectedSizes.includes(size)) {
          setSelectedSizes(selectedSizes.filter((s) => s !== size));
@@ -20,7 +16,6 @@ export default function Filters({ categoryList = [], searchProductOfThisCategory
       }
    };
 
-   // Handle category selection
    const handleCategoryChange = (category) => {
       if (selectedCategories.includes(category)) {
          setSelectedCategories(selectedCategories.filter((c) => c !== category));
@@ -29,7 +24,6 @@ export default function Filters({ categoryList = [], searchProductOfThisCategory
       }
    };
 
-   // Handle price range change
    const handlePriceChangeLower = (e) => {
       setPriceRange([+e.target.value, priceRange[1]]);
    };
@@ -38,20 +32,19 @@ export default function Filters({ categoryList = [], searchProductOfThisCategory
       setPriceRange([priceRange[0], +e.target.value]);
    };
 
-   // Reset all filters
    const resetFilters = () => {
       setSelectedSizes([]);
       setSelectedCategories([]);
       setPriceRange([100, 5000]);
    };
 
-   // Apply filters
-   const applyFilters = () => {
-      applyFiltersOnProducts(selectedSizes, priceRange[0], priceRange[1], selectedCategories);
+   const applyFilters = async () => {
+      reAssignProductItems(await applyFiltersOnProducts(selectedSizes, priceRange[0], priceRange[1], selectedCategories));
    };
 
    return (
       <div className="p-6 mt-6 shadow-inner bg-gray-50 shadow-slate-300 rounded-lg">
+
          {/* Category Filter */}
          <div className="mb-6">
             <h2 className="font-bold text-lg mb-2">Category</h2>
@@ -60,12 +53,12 @@ export default function Filters({ categoryList = [], searchProductOfThisCategory
                   <label key={category.id} className="inline-flex items-center cursor-pointer">
                      <input
                         type="checkbox"
-                        value={category.id} // Use category id for the value
+                        value={category.id}
                         checked={selectedCategories.includes(category.id)}
                         onChange={() => handleCategoryChange(category.id)}
                         className="accent-primary w-[20px] h-[20px]"
                      />
-                     <span className="ml-2">{category.title}</span> {/* Render category title */}
+                     <span className="ml-2">{category.title}</span>
                   </label>
                ))}
             </div>

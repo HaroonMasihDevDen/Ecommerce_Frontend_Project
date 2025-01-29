@@ -61,29 +61,10 @@ export default function Navbar({ searchProducts }) {
    };
 
    return (
-      // <div className='font-sans font-normal' style={{ fontSize: '16px' }}>
-      <div className='sticky top-0 z-50'>
-         < header className="antialiased" >
+      <div className='sticky top-0 z-50 backdrop-blur-md'>
+         <header className="antialiased" >
             <nav className="border-gray-200 px-4 lg:px-6 py-2 dark:bg-gray-800">
-               {/* <div className="parent hidden flex justify-between items-center w-full">
-                  <div className="sibling1">Sibling 1</div>
-                  <div className="sibling2">Sibling 2</div>
-
-                  <div className="flex justify-center w-full">
-                     <ul className="flex gap-4">
-                        <li>
-                           <BiUser className="text-2xl text-gray-700 cursor-pointer" onClick={openUserPanel} />
-                        </li>
-                        <li>
-                           <BiCart className="text-2xl text-gray-700 cursor-pointer" onClick={() => { window.location = "/cart"; }} />
-                        </li>
-                     </ul>
-                  </div>
-
-                  <div className="sibling3">Sibling 3</div>
-               </div> */}
-
-               <div className="navbar-siblings-parent flex w-full text-center justify-between items-center ">
+               <div className="navbar-siblings-parent px-4 flex w-full text-center justify-between items-center ">
                   <div className="first_part_of_navbar flex justify-start items-center">
                      <a href="/" className="flex mr-4">
                         {/* <img src="/logo1.png" className="mr-3 h-8" alt="Aurora Logo" /> */}
