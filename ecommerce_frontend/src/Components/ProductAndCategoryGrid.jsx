@@ -19,8 +19,6 @@ export default function ProductAndCategoryGrid({ productItems, categoryItems, se
             <div className='p-4 flex flex-wrap justify-start gap-y-2 p-auto'>
                {productItems !== null && productItems !== undefined && (
                   productItems.map(product => (
-                     // product.imageUrl = 'https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb',
-                     product.imageUrl = 'https://picsum.photos/200/300?random=1',
                      <ProductCard key={product.id} product={product} />
                   )))}
             </div>

@@ -62,8 +62,8 @@ export default function Navbar({ searchProducts }) {
 
    return (
       // <div className='font-sans font-normal' style={{ fontSize: '16px' }}>
-      <div className=''>
-         <header className="antialiased">
+      <div className='sticky top-0 z-50'>
+         < header className="antialiased" >
             <nav className="border-gray-200 px-4 lg:px-6 py-2 dark:bg-gray-800">
                {/* <div className="parent hidden flex justify-between items-center w-full">
                   <div className="sibling1">Sibling 1</div>
@@ -97,26 +97,26 @@ export default function Navbar({ searchProducts }) {
                               <li className=''>
                                  <button className='relative group hover:text-primary transition-all duration-300' onClick={() => { window.location = "/" }}>
                                     <span> Home </span>
-                                    <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                                    <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
                                  </button>
 
                               </li>
                               <li>
                                  <button className='relative group hover:text-primary transition-all duration-300' onClick={showCategoriesInNavBar}>
                                     <span> Categories </span>
-                                    <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                                    <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
                                  </button>
                               </li>
                               <li>
                                  <button className='relative group hover:text-primary transition-all duration-300' onClick={showCategoriesInNavBar}>
                                     <span> New Arrival </span>
-                                    <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                                    <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
                                  </button>
                               </li>
                               <li>
                                  <button className='relative group hover:text-blue-400 transition-all duration-300'>
                                     <span> About </span>
-                                    <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
+                                    <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
 
                                  </button>
                               </li>

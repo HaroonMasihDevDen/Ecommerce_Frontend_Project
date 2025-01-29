@@ -1,18 +1,26 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 const ProductCard = ({ product }) => {
-    function showProductDetails(id) {
-        window.location = `/product/${id}`;
+    const navigate = useNavigate();
+
+    function showProductDetails(product) {
+        navigate(`/product/${product.id}`, { state: { product } });
     };
+
+    // do not show the product if no image is available for the product
+    if (!product.base64_images) {
+        return null;
+    }
 
     return (
         <div className="w-[20rem] border dark:bg-gray-800 dark:border-gray-700 m-[4px] mt-8">
-            <a onClick={() => showProductDetails(product.id)} className="text-white cursor-pointer">
+            <a onClick={() => showProductDetails(product)} className="text-white cursor-pointer">
                 <div className='h-[23rem] w-full'>
 
                     <a href="#" className="relative h-[100%]">
-                        {/* <img className="h-full w-full object-cover" src={product.imageUrl} alt={product.name} /> */}
-                        <img className="h-full w-full object-cover" src={`https://picsum.photos/200/300?random=1`} alt={product.name} />
+                        <img className="h-full w-full object-cover" src={product.base64_images[0]} alt={product.name} />
                         {product.discountPercentage > 0 && (
                             <span className="absolute top-2 right-2 p-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded dark:bg-blue-200 dark:text-blue-800">
                                 {product.discountPercentage}% Discount

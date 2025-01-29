@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { getProductDetails } from '../api/product';
 import Cookies from 'js-cookie';
 import { validateToken } from '../api/auth';
@@ -15,25 +15,28 @@ const ProductDetailsPage = () => {
     const [selectedSize, setSelectedSize] = useState(-1);
     const [selectedSizeID, setSelectedSizeID] = useState(-1);
     const [price, setprice] = useState(0);
+    const location = useLocation();
+    const productFromNav = location.state?.product;
+    const [currentPrevImageIndex, setCurrentPrevImageIndex] = useState(0);
 
-    var is_datailsFetched = false;
     useEffect(() => {
-        if (!is_datailsFetched) {
+        if (productFromNav) {
+            setProduct(productFromNav);
+            if (productFromNav.sizes && productFromNav.sizes.length > 0) {
+                setprice(productFromNav.sizes[0].price);
+                setSelectedSizeID(productFromNav.sizes[0].size_id);
+            }
+        } else {
             fetchProductDetails(productId);
-            is_datailsFetched = true;
         }
-    }, []);
+    }, [productId, productFromNav]);
 
     const fetchProductDetails = async (productId) => {
-
         const response = await getProductDetails(productId);
         setProduct(response);
-        if (response && response.sizes.length > 0) {
+        if (response && response.sizes && response.sizes.length > 0) {
             setprice(response.sizes[0].price);
             setSelectedSizeID(response.sizes[0].size_id);
-        }
-        else {
-            setprice("");
         }
     };
 
@@ -80,37 +83,24 @@ const ProductDetailsPage = () => {
                 <div>
                     <section className="py-5">
                         <div className="container mx-auto px-4">
-                            <div className="flex flex-wrap -mx-4">
-                                <aside className="lg:w-1/2 px-4 mb-6 lg:mb-0">
-                                    <div className="border rounded-lg mb-3 flex justify-center">
-                                        <a
-                                            className="rounded-lg"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            href="https://mdbcdn.b-cdn.net/img/bootstrap-ecommerce/items/detail1/big.webp"
-                                        >
-                                            <img
-                                                className="max-w-full max-h-screen mx-auto rounded-lg"
-                                                src="https://mdbcdn.b-cdn.net/img/bootstrap-ecommerce/items/detail1/big.webp"
-                                                alt="Main"
-                                            />
-                                        </a>
+                            <div className="flex flex-wrap -mx-4 justify-center">
+                                <aside className="px-4 mb-6 lg:mb-0">
+                                    <div className="mb-3 flex justify-center">
+                                        <img
+                                            className="w-[25rem] h-[30rem] object-cover rounded-lg"
+                                            src={product.base64_images[currentPrevImageIndex]}
+                                            alt="Main"
+                                        />
                                     </div>
                                     <div className="flex justify-center mb-3">
-                                        {['big1.webp', 'big2.webp', 'big3.webp', 'big4.webp', 'big.webp'].map((src, index) => (
-                                            <a
+                                        {product.base64_images.map((src, index) => (
+                                            <img
                                                 key={index}
-                                                className="border mx-1 rounded-lg"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                href={`https://mdbcdn.b-cdn.net/img/bootstrap-ecommerce/items/detail1/${src}`}
-                                            >
-                                                <img
-                                                    className="w-20 h-20 rounded-lg "
-                                                    src={`https://mdbcdn.b-cdn.net/img/bootstrap-ecommerce/items/detail1/${src}`}
-                                                    alt={`Thumbnail ${index}`}
-                                                />
-                                            </a>
+                                                className={`w-20 h-20 rounded-lg m-1 ${currentPrevImageIndex === index ? 'border-4 border-blue-500' : ''}`}
+                                                src={src}
+                                                alt={`Thumbnail ${index}`}
+                                                onClick={() => setCurrentPrevImageIndex(index)}
+                                            />
                                         ))}
                                     </div>
                                 </aside>
@@ -120,10 +110,15 @@ const ProductDetailsPage = () => {
                                             {product.name}
                                         </h4>
                                         <br />
-                                        <div className="mb-3">
-                                            <span className="text-2xl">Rs. {price}</span>
-                                        </div>
+                                        <div className='flex col-2'>
+                                            <div className="mb-3">
+                                                <span className="text-2xl">Rs. {price}</span>
+                                            </div>
 
+                                            <div className='mb-3'>
+                                                <span className="ms-4 text-green-600 font-bold">In stock</span>
+                                            </div>
+                                        </div>
 
                                         <hr className="my-4" />
                                         <div className="flex flex-wrap mb-4">
@@ -133,7 +128,7 @@ const ProductDetailsPage = () => {
                                                     onChange={handleSizeChange}
                                                     value={selectedSize || ""}
                                                 >
-                                                    {product.sizes.map((size, index) => (
+                                                    {product.sizes !== null && product.sizes.map((size, index) => (
                                                         <option key={index} value={size.size_title} >
                                                             {size.size_title}
                                                         </option>
@@ -156,14 +151,11 @@ const ProductDetailsPage = () => {
                                                     </button>
                                                 </div>
                                             </div>
-                                            <div className='mb-0 pt-10'>
-                                                <span className=" ml-2 end-0 justify-end items-end text-green-600 font-bold">In stock</span>
-                                            </div>
                                         </div>
                                         <div className="flex justify-end">
 
                                             {/* <a href="#" className="bg-yellow-500 text-white py-2 px-4 rounded-lg shadow-md inline-block mr-2">Buy now</a> */}
-                                            <a onClick={() => addProductToCart(product.id)} className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md inline-block mr-2">
+                                            <a onClick={() => addProductToCart(product.id)} className="bg-blue-500 text-white py-2 px-4 rounded-lg cursor-pointer shadow-md inline-block mr-2">
                                                 <i className="fas fa-shopping-basket mr-1"></i> Add to cart
                                             </a>
 

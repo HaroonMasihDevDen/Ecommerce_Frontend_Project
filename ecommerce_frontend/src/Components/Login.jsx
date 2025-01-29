@@ -36,15 +36,17 @@ export default function Login() {
   return (
     <>
 
-      <div class="px-[10rem] py-[5rem] flex  ">
+      <div class="px-[10rem] py-[5rem] flex">
         <div class="flex justify-center w-full border border-2xl shadow-lg">
           <div className="flex min-h-full w-[40%] flex-col justify-center px-8 py-12 ">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-              <img
+              {/* <img
                 alt="Your Company"
                 src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                 className="mx-auto h-10 w-auto"
-              />
+              /> */}
+              <span onClick={() => { window.location = "/"; }} className="self-center cursor-pointer text-3xl font-semibold whitespace-nowrap dark:text-white" style={{ fontFamily: 'cursive' }}> GlamourGate </span>
+
               <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                 Sign in to your account
               </h2>
