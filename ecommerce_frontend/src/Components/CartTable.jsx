@@ -68,21 +68,29 @@ const CartTable = ({
   };
 
   useEffect(() => {
-    if (productList && productTokenValid && indexOfProductForVoucher >= 0) {
-      const temp = [...totalAmountForEachProduct];
-      temp[indexOfProductForVoucher] = (productList[indexOfProductForVoucher].price * quantities[indexOfProductForVoucher]) - calculateDiscountAmount();
-      setTotalAmountForEachProduct(temp);
+    console.log("quantities:::", quantities);
+    if (productList) {
+      if (indexOfProductForVoucher >= 0) {
+        if (!productTokenValid) {
+          return 0;
+        }
+      }
+
+      setTotalAmountForEachProduct(productList.map((item, index) => item.price * quantities[index]))
+      // const temp = [...totalAmountForEachProduct];
+      // temp[indexOfProductForVoucher] = (productList[indexOfProductForVoucher].price * quantities[indexOfProductForVoucher]) - calculateDiscountAmount();
+      // setTotalAmountForEachProduct(temp);
     }
   }, [quantities, productList, indexOfProductForVoucher, discountValue_backend]);
 
 
   return (
-    <section className="gap-2 flex p-1 max-w-[1200px]">
+    <section className="flex max-w-[1200px]">
       <table className="table-auto w-full">
-        <thead className="h-16 bg-neutral-100">
+        <thead className="h-16 bg-primary-light text-white">
           <tr>
             <th>ITEM</th>
-            <th>Voucher</th>
+            {/* <th>Voucher</th> */}
             <th>PRICE</th>
             <th>QUANTITY</th>
             <th>TOTAL</th>
@@ -93,12 +101,12 @@ const CartTable = ({
           {productList.map((x, index) => {
             return (
               <tr className="h-[100px] border-b" key={index}>
-                <td className="align-middle">
+                <td className="align-middle py-4">
                   {/* Render productList details from the prop */}
                   <div className="flex w-fit">
                     <img
-                      className="w-[90px]"
-                      src={x.image}
+                      className="w-[90px] h-[120px]"
+                      src={x.base64_image}
                       alt="bedroom image"
                     />
                     <div className="ml-3 flex flex-col justify-center">
@@ -107,7 +115,7 @@ const CartTable = ({
                     </div>
                   </div>
                 </td>
-                <td className="mx-auto text-center py-2">
+                {/* <td className="mx-auto text-center py-2">
                   <input type="text"
                     onChange={(e) => {
                       setToken(e.target.value);
@@ -126,7 +134,7 @@ const CartTable = ({
                   >
                     Apply
                   </button>
-                </td>
+                </td> */}
                 <td className="mx-auto text-center">Rs. {x.price}</td>
                 {/* Additional code for quantity and total remains unchanged */}
                 <td className="align-middle">

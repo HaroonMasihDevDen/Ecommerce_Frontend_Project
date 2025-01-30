@@ -41,7 +41,7 @@ const CartPage = () => {
 
     setCartItems(newProductItems);
     console.log(newProductItems);
-    alert("item deleted successfully");
+    window.location.reload();
     setQuantities(newQuantities);
   };
 
@@ -55,7 +55,8 @@ const CartPage = () => {
   }
 
   useEffect(() => {
-    setSubtotal(calculateSubtotal());
+    const subtotal = calculateSubtotal();
+    setSubtotal(subtotal);
     setDiscountAmount_frontend(calculateDiscountAmount());
     setTotalAmount(subtotal - discountAmount_f);
   }, [quantities, discountValue_b, discountAmount_f]);
@@ -84,7 +85,7 @@ const CartPage = () => {
       const response = await get_user_cart_items();
       console.log("response for get cart items", response);
       if (response) {
-        response.map((item) => item.image = "https://i.imgur.com/ohfEDZm.jpg");
+        // response.map((item) => item.image = "https://i.imgur.com/ohfEDZm.jpg");
         setCartItems(response);
       } else {
         setCartItems([]);
@@ -163,9 +164,9 @@ const CartPage = () => {
                         </div>
 
                         <div className="flex justify-between border-b py-5">
-                          <p className='pt-2'>Voucher(if any)</p>
-                          <input type="text" onChange={(e) => setToken(e.target.value)} placeholder='enter token...' className='border rounded-sm ps-2' value={token} />
-                          <button onClick={validate_voucher_token} className='bg-pile-700 text-white p-2 rounded-md' >Apply</button>
+                          <p className='pt-2'>Voucher</p>
+                          <input type="text" onChange={(e) => setToken(e.target.value)} placeholder='token' className='border rounded-sm ps-2' value={token} />
+                          <button onClick={validate_voucher_token} className='bg-primary-light text-white p-2 rounded-md' >Apply</button>
                         </div>
 
                         <div className="flex justify-between py-5 border-b">
@@ -175,11 +176,11 @@ const CartPage = () => {
 
                         <div className="flex justify-between py-5">
                           <p>Total</p>
-                          <p>Rs. {totalAmount}</p>
+                          <p>Rs. {totalAmount.toFixed(2)}</p>
                         </div>
 
                         <a href="checkout-address.html">
-                          <button className="w-full bg-pile-700 px-5 py-2 text-white rounded-md">
+                          <button className="w-full bg-primary-light px-5 py-2 text-white rounded-md">
                             Proceed to checkout
                           </button>
                         </a>

@@ -62,6 +62,7 @@ module.exports = {
 				},
 				primary: {
 					light: "var(--color-primary-light)",
+					light2: "var(--color-primary-light2)",
 					DEFAULT: "var(--color-primary)",
 					dark: "var(--color-primary-dark)",
 				},
