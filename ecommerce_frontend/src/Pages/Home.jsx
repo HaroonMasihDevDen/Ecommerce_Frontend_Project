@@ -6,6 +6,8 @@ import { getProducts, searchProductsApi } from '../api/product';
 import Carousel from '../Components/Carousel';
 import CategoriesRounded from '../Components/CategoriesRounded';
 import CircularSlider from '../Components/CircularSlider';
+import LowStockAlert from '../Components/LowStockAlert';
+
 
 export default function Home() {
   const [categoryItems, setCategoryItems] = useState(null);
@@ -56,6 +58,10 @@ export default function Home() {
       <div className=''>
         <div className='sticky top-0 z-50 bg-gradient-to-r  from-[#FDE9E0] via-white to-[#cfebf3] w-[100vw]'>
           <Navbar searchProducts={searchProducts} />
+        </div>
+
+        <div className='absolute top-[6rem]'>
+          <LowStockAlert />
         </div>
 
         <div className="w-[100%] h-[100vh] bg-[#ebdfbec6] bg-gradient-to-r from-[#FDE9E0] via-white to-[#cfebf3]">
