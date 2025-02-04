@@ -6,6 +6,7 @@ import { validateToken } from '../api/auth';
 import { addToCart } from '../api/cart';
 import { checkIfUserAuthAndNavigate } from '../service/authUser';
 import Navbar from './Navbar';
+import ProductChat from './ProductChat';
 
 
 const ProductDetailsPage = () => {
@@ -178,7 +179,7 @@ const ProductDetailsPage = () => {
                     </section>
 
                     {/* Additional Info Section */}
-                    <section className="bg-gray-100 border-t py-4">
+                    {/* <section className="bg-gray-100 border-t py-4">
                         <div className="container mx-auto px-4">
                             <div className="flex flex-wrap -mx-4">
 
@@ -193,6 +194,12 @@ const ProductDetailsPage = () => {
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </section> */}
+
+                    <section>
+                        <div className=''>
+                            <ProductChat productId={productId} user_id={18} chats={product.chats} />
                         </div>
                     </section>
                 </div>

@@ -4,7 +4,7 @@ import {
 	LOGIN_API,
 	LOGOUT_API,
 	VALIDATE_TOKEN_API,
-	REGISTER_API, // Add the registration API URL here
+	REGISTER_API,
 } from "../config/api";
 
 // Function to handle user login

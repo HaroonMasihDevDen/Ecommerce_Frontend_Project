@@ -1,9 +1,11 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 import {
 	PRODUCTS_API,
 	PRODUCT_DETAILS_API,
 	SEARCH_PRODUCT_API,
 	FILTER_PRODUCT_API,
+	CREATE_CHAT_API,
 } from "../config/api";
 
 export const getProducts = async () => {
@@ -84,5 +86,28 @@ export const applyFiltersOnProducts = async (
 	} catch (error) {
 		console.error("Error searching product :", error.response?.data);
 		throw new Error(error.response?.statusText || "search product failed");
+	}
+};
+
+export const sendChatAboutProduct = async (product_id, user_id, question) => {
+	try {
+		const response = await axios.get(`${CREATE_CHAT_API(product_id)}`, {
+			params: {
+				product_id: product_id,
+				user_id: user_id,
+				question: question,
+			},
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: Cookies.get("Authorization"),
+			},
+		});
+
+		return response.data;
+	} catch (error) {
+		console.error("Error sending chat about product :", error.response?.data);
+		throw new Error(
+			error.response?.statusText || "send chat about product failed"
+		);
 	}
 };

@@ -25,11 +25,14 @@ const LowStockAlert = () => {
         <>
             {isNotificationVisible && (
                 <div className='relative'>
-                    <span className='bg-blue-400 rounded-full w-[1.5rem] h-[1.5rem] flex justify-center items-center text-white cursor-pointer text-[1rem] absolute top-0 right-0'
-                        onClick={() => setIsNotificationVisible(false)}
-                    >
-                        <FaTimes />
-                    </span>
+                    <div className='pb-1'>
+                        <span className='bg-blue-400 rounded-full w-[1.5rem] h-[1.5rem] flex justify-center items-center text-white cursor-pointer text-[1rem] absolute top-0 right-0'
+                            onClick={() => setIsNotificationVisible(false)}
+                        >
+
+                            <FaTimes />
+                        </span>
+                    </div>
                     <div className="rounded px-4 py-3 mx-2 my-2 left-0 bg-yellow-300 text-black text-center">
                         {notification}
                     </div>
