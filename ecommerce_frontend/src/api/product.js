@@ -6,6 +6,7 @@ import {
 	SEARCH_PRODUCT_API,
 	FILTER_PRODUCT_API,
 	CREATE_CHAT_API,
+	GET_ALL_CHATS_API,
 } from "../config/api";
 
 export const getProducts = async () => {
@@ -33,8 +34,6 @@ export const getProductDetails = async (productId) => {
 				"Content-Type": "application/json",
 			},
 		});
-
-		console.log("Product details response hello :", response.data);
 		return response.data;
 	} catch (error) {
 		console.error("Error fetching product details:", error.response?.data);
@@ -109,5 +108,21 @@ export const sendChatAboutProduct = async (product_id, user_id, question) => {
 		throw new Error(
 			error.response?.statusText || "send chat about product failed"
 		);
+	}
+};
+
+export const getAllChats = async () => {
+	try {
+		const response = await axios.get(`${GET_ALL_CHATS_API}`, {
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: Cookies.get("Authorization"),
+			},
+		});
+
+		return response.data;
+	} catch (error) {
+		console.error("Error getting all chats :", error.response?.data);
+		throw new Error(error.response?.statusText || "get all chats failed");
 	}
 };

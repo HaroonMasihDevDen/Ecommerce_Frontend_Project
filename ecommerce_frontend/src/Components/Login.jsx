@@ -12,7 +12,7 @@ export default function Login() {
       try {
         const lastLocation = localStorage.getItem('lastLocation');
         localStorage.removeItem('lastLocation');
-        alert(lastLocation);
+        alert("lastLocation" + lastLocation);
         if (lastLocation != null) {
           window.location.replace(lastLocation);
         }

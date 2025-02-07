@@ -75,7 +75,6 @@ const CartPage = () => {
   const authenticateUserUsingToken = async () => {
     const userAuth = await checkIfUserAuthAndNavigate();
     if (userAuth) {
-
       fetchCartItems();
     }
   };

@@ -50,7 +50,6 @@ export default function Home() {
 
   const reAssignProductItems = (products) => {
     setProductItems(products);
-    // debugger;
   };
 
   return (

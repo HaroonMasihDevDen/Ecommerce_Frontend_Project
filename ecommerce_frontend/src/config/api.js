@@ -6,7 +6,7 @@ export const getApiUrl = (endpoint) => `${API_BASE_URL}${endpoint}`;
 export const LOGIN_API = getApiUrl("/login");
 export const REGISTER_API = getApiUrl("/signup");
 export const LOGOUT_API = getApiUrl("/logout");
-export const VALIDATE_TOKEN_API = getApiUrl("validate_token");
+export const VALIDATE_TOKEN_API = getApiUrl("/validate_token");
 
 // category.js
 export const CATEGORIES_API = getApiUrl("/categories");
@@ -29,4 +29,5 @@ export const VALIDATE_VOUCHER_API = getApiUrl("/validate_voucher");
 
 //chat about product
 export const CREATE_CHAT_API = (product_id) =>
-	getApiUrl(`products/${product_id}/chats`);
+	getApiUrl(`/products/${product_id}/chats`);
+export const GET_ALL_CHATS_API = getApiUrl(`/get_all_chats`);
