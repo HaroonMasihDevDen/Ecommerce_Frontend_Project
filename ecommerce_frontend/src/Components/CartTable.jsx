@@ -9,8 +9,10 @@ const CartTable = ({
   updateQuantity,
   removeItem,
 }) => {
+  console.log("products_products_products");
   const [productList, setProductList] = useState(products || []);
   const [token, setToken] = useState("");
+  console.log(productList);
   const [capAmount, setCapAmount] = useState(0);
   const [discountType, setDiscountType] = useState(null);
   const [discountValue_backend, setDiscountValue_backend] = useState(-1);
@@ -68,7 +70,6 @@ const CartTable = ({
   };
 
   useEffect(() => {
-    console.log("quantities:::", quantities);
     if (productList) {
       if (indexOfProductForVoucher >= 0) {
         if (!productTokenValid) {
@@ -86,96 +87,75 @@ const CartTable = ({
 
   return (
     <section className="flex max-w-[1200px]">
-      <table className="table-auto w-full">
-        <thead className="h-16 bg-primary-light text-white">
-          <tr>
-            <th>ITEM</th>
-            {/* <th>Voucher</th> */}
-            <th>PRICE</th>
-            <th>QUANTITY</th>
-            <th>TOTAL</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody className="">
-          {productList.map((x, index) => {
-            return (
-              <tr className="h-[100px] border-b" key={index}>
-                <td className="align-middle py-4">
-                  {/* Render productList details from the prop */}
-                  <div className="flex w-fit">
-                    <img
-                      className="w-[90px] h-[120px]"
-                      src={x.base64_image}
-                      alt="bedroom image"
+      <div className="rounded-lg overflow-hidden w-full">
+        <table className="table-auto w-full">
+          <thead className="h-16 bg-primary text-white rounded-lg">
+            <tr className=''>
+              <th>ITEM</th>
+              <th>PRICE</th>
+              <th>QUANTITY</th>
+              <th>TOTAL</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody className="">
+            {productList.map((x, index) => {
+              return (
+                <tr className="h-[100px] border-b mx-2" key={index}>
+                  <td className="align-middle py-4">
+                    {/* Render productList details from the prop */}
+                    <div className="flex w-fit">
+                      <img
+                        className="w-[95px] h-[120px] ms-2 rounded-md"
+                        src={x.base64_image}
+                        alt="bedroom image"
+                      />
+                      <div className="ml-3 flex flex-col justify-center">
+                        <p className="text-xl font-bold">{x.name}</p>
+                        <p className="text-sm text-gray-400">Size: {x.size}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="mx-auto text-center">Rs. {x.price}</td>
+                  <td className="align-middle">
+                    <div className="flex items-center justify-center">
+                      <button
+                        className="flex h-8 w-8 cursor-pointer items-center justify-center border duration-100 hover:bg-neutral-100 focus:ring-2 focus:ring-gray-500 active:ring-2 active:ring-gray-500"
+                        onClick={() =>
+                          updateQuantity(index, quantities[index] - 1)
+                        }
+                      >
+                        −
+                      </button>
+                      <div className="flex h-8 w-8 cursor-text items-center justify-center border-t border-b active:ring-gray-500">
+                        {quantities[index]}
+                      </div>
+                      <button
+                        className="flex h-8 w-8 cursor-pointer items-center justify-center border duration-100 hover:bg-neutral-100 focus:ring-2 focus:ring-gray-500 active:ring-2 active:ring-gray-500"
+                        onClick={() =>
+                          updateQuantity(
+                            index,
+                            Math.max(1, quantities[index] + 1)
+                          )
+                        }
+                      >
+                        +
+                      </button>
+                    </div>
+                  </td>
+                  <td className="mx-auto text-center">Rs. {totalAmountForEachProduct[index]}</td>
+                  <td className="align-middle">
+                    <FaTrashAlt
+                      onClick={() => removeItem(index)}
+                      className="m-0 h-5 w-5 cursor-pointer me-2 hover:fill-red-600"
                     />
-                    <div className="ml-3 flex flex-col justify-center">
-                      <p className="text-xl font-bold">{x.name}</p>
-                      <p className="text-sm text-gray-400">Size: {x.size}</p>
-                    </div>
-                  </div>
-                </td>
-                {/* <td className="mx-auto text-center py-2">
-                  <input type="text"
-                    onChange={(e) => {
-                      setToken(e.target.value);
-                      setIndexOfProductForVoucher(index);
-                      if (e.target.value.trim().length === 0) {
-                        setIndexOfProductForVoucher(-1);
-                      }
-
-                    }}
-                    className='border ps-2 rounded-sm py-1'
-                    disabled={index != indexOfProductForVoucher && indexOfProductForVoucher != -1}
-                    placeholder='enter voucher..'
-                  />
-                  <button onClick={validate_voucher_token}
-                    className='bg-pile-700 text-white p-1 px-2 rounded-md ms-1'
-                  >
-                    Apply
-                  </button>
-                </td> */}
-                <td className="mx-auto text-center">Rs. {x.price}</td>
-                {/* Additional code for quantity and total remains unchanged */}
-                <td className="align-middle">
-                  <div className="flex items-center justify-center">
-                    <button
-                      className="flex h-8 w-8 cursor-pointer items-center justify-center border duration-100 hover:bg-neutral-100 focus:ring-2 focus:ring-gray-500 active:ring-2 active:ring-gray-500"
-                      onClick={() =>
-                        updateQuantity(index, quantities[index] - 1)
-                      }
-                    >
-                      −
-                    </button>
-                    <div className="flex h-8 w-8 cursor-text items-center justify-center border-t border-b active:ring-gray-500">
-                      {quantities[index]}
-                    </div>
-                    <button
-                      className="flex h-8 w-8 cursor-pointer items-center justify-center border duration-100 hover:bg-neutral-100 focus:ring-2 focus:ring-gray-500 active:ring-2 active:ring-gray-500"
-                      onClick={() =>
-                        updateQuantity(
-                          index,
-                          Math.max(1, quantities[index] + 1)
-                        )
-                      }
-                    >
-                      +
-                    </button>
-                  </div>
-                </td>
-                {/* <td className="mx-auto text-center">Rs. {x.price * quantities[index]}</td> */}
-                <td className="mx-auto text-center">Rs. {totalAmountForEachProduct[index]}</td>
-                <td className="align-middle">
-                  <FaTrashAlt
-                    onClick={() => removeItem(index)}
-                    className="m-0 h-5 w-5 cursor-pointer"
-                  />
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </section>
   );
 };

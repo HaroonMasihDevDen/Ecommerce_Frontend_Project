@@ -1,154 +1,141 @@
 import React, { useState } from "react";
 import { useMutation } from 'react-query';
-import { login, logout, validateToken } from '../api/auth';
+import { AlertCircle } from "lucide-react";
+import { login } from '../api/auth';
 
-export default function Login() {
+const Login = () => {
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
-  // const navigate = useNavigate();
 
   const loginMutation = useMutation(login, {
     onSuccess: () => {
       try {
         const lastLocation = localStorage.getItem('lastLocation');
         localStorage.removeItem('lastLocation');
-        alert("lastLocation" + lastLocation);
         if (lastLocation != null) {
           window.location.replace(lastLocation);
-        }
-        else {
+        } else {
           window.location.href = '/';
         }
       } catch (error) {
         window.location.href = '/';
       }
-    }
-    ,
+    },
     onError: (error) => {
-      alert(`Login failed: ${error.message}`);
+      // Error will be handled by the UI automatically via mutation.error
     }
   });
 
   const handleLogin = (e) => {
     e.preventDefault();
-    loginMutation.mutate({ user: { email: enteredEmail, password: enteredPassword } });
+    loginMutation.mutate({
+      user: {
+        email: enteredEmail,
+        password: enteredPassword
+      }
+    });
   };
+
   return (
-    <>
-      <div class="px-[10rem] py-[5rem] flex">
-        <div class="flex justify-center w-full border border-2xl shadow-lg">
-          <div className="flex min-h-full w-[40%] flex-col justify-center px-8 py-12 ">
-            <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-              {/* <img
-                alt="Your Company"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                className="mx-auto h-10 w-auto"
-              /> */}
-              <span onClick={() => { window.location = "/"; }} className="self-center cursor-pointer text-3xl font-semibold whitespace-nowrap dark:text-white" style={{ fontFamily: 'cursive' }}> GlamourGate </span>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 p-4 sm:p-6 md:p-8 flex items-center justify-center">
+      <div className="w-full max-w-6xl bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row">
+        {/* Left side - Form */}
+        <div className="w-full md:w-1/2 p-8 md:p-12 space-y-8">
+          <div className="text-center">
+            <h1
+              onClick={() => { window.location = "/"; }}
+              className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent cursor-pointer hover:opacity-80 transition-opacity"
+            >
+              GlamourGate
+            </h1>
+            <p className="mt-3 text-gray-500">Welcome back! Please sign in to continue.</p>
+          </div>
 
-              <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                Sign in to your account
-              </h2>
+          <form onSubmit={handleLogin} className="space-y-6">
+            {loginMutation.error && (
+              <div className="bg-red-50 text-red-600 p-3 rounded-lg flex items-center gap-2">
+                <AlertCircle size={20} />
+                <span>{loginMutation.error.message || "Login failed. Please try again."}</span>
+              </div>
+            )}
+
+            <div className="space-y-2">
+              <label className="text-sm text-start font-medium text-gray-700 block">Email address</label>
+              <input
+                type="email"
+                required
+                value={enteredEmail}
+                onChange={(e) => setEnteredEmail(e.target.value)}
+                className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all"
+                placeholder="Enter your email"
+              />
             </div>
 
-            <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-              <form onSubmit={handleLogin} method="POST" className="space-y-6">
-                <div className="grid gap-0">
-                  <label
-                    htmlFor="email"
-                    className="text-sm text-start font-medium leading-6 text-gray-900"
-                  >
-                    Email address
-                  </label>
-                  <div className="mt-2">
-                    <input
-                      id="email"
-                      name="email"
-                      type="email"
-                      required
-                      autoComplete="email"
-                      onChange={(e) => setEnteredEmail(e.target.value)}
-                      className="block w-full rounded-md border-0 py-1.5 ps-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <div className="flex items-center justify-between">
-                    <label
-                      htmlFor="password"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      Password
-                    </label>
-                    <div className="text-sm">
-                      <a
-                        href="#"
-                        className="font-semibold text-indigo-600 hover:text-indigo-500"
-                      >
-                        Forgot password?
-                      </a>
-                    </div>
-                  </div>
-                  <div className="mt-2">
-                    <input
-                      id="password"
-                      name="password"
-                      type="password"
-                      required
-                      autoComplete="current-password"
-                      onChange={(e) => setEnteredPassword(e.target.value)}
-                      className="block w-full rounded-md border-0 py-1.5 ps-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                </div>
-                <div class="lx zg zm flex">
-                  <div class="lx zg">
-                    <input
-                      id="remember-me"
-                      name="remember-me"
-                      type="checkbox"
-                      class="oc se adw agc ayn bnu"
-                    />
-                    <label for="remember-me" class="jw lu awg awv axz ms-2">
-                      Remember me
-                    </label>
-                  </div>
-                </div>
-
-                <div>
-                  <button
-                    type="submit"
-                    className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-
-                  >
-                    Sign in
-                  </button>
-                </div>
-              </form>
-
-              <p className="mt-10 text-center text-sm text-gray-500">
-                Not a member?{" "}
-                <a
-                  href="/register"
-                  className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-                >
-                  Sign up
-                </a>
-              </p>
-              {/* <button onClick={logoutAction}>Logout</button> */}
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <label className="text-sm font-medium text-gray-700">Password</label>
+                <a href="#" className="text-sm text-indigo-600 hover:text-indigo-500">Forgot password?</a>
+              </div>
+              <input
+                type="password"
+                required
+                value={enteredPassword}
+                onChange={(e) => setEnteredPassword(e.target.value)}
+                className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all"
+                placeholder="Enter your password"
+              />
             </div>
-          </div>
-          <div className="slider flex min-h-full flex-1 flex-col justify-center">
-            <img
-              alt="Ecommerce Store"
-              src="/ecommerce_store_bg.png"
-              // src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              className="mx-auto h-full w-auto"
-            />
-          </div>
+
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="remember-me"
+                className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+              />
+              <label htmlFor="remember-me" className="ml-2 text-sm text-gray-600">
+                Remember me
+              </label>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loginMutation.isLoading}
+              className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 px-6 rounded-lg font-medium
+                hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2
+                disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 ease-in-out
+                flex items-center justify-center"
+            >
+              {loginMutation.isLoading ? (
+                <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                </svg>
+              ) : (
+                "Sign in"
+              )}
+            </button>
+          </form>
+
+          <p className="text-center text-gray-600">
+            Not a member?{" "}
+            <a href="/register" className="text-indigo-600 hover:text-indigo-500 font-medium">
+              Create an account
+            </a>
+          </p>
+        </div>
+
+        {/* Right side - Image */}
+        <div className="hidden md:block w-1/2 bg-cover bg-center relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/10" />
+          <img
+            src="/ecommerce_store_bg.png"
+            alt="Fashion Store"
+            className="w-full h-full object-cover"
+          />
         </div>
       </div>
-    </>
+    </div>
   );
-}
+};
+
+export default Login;

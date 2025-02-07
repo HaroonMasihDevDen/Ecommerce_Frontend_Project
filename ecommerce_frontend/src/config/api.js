@@ -26,6 +26,9 @@ export const STORE_IN_CART_API = getApiUrl("/cart_items");
 export const GET_USER_CART_ITEMS_API = getApiUrl("/cart_items");
 export const DELETE_FROM_CART_API = getApiUrl("/cart_items");
 export const VALIDATE_VOUCHER_API = getApiUrl("/validate_voucher");
+export const GET_CART_ITEMS_COUNT_API = getApiUrl(
+	"/cart_items/getCartItemCount"
+);
 
 //chat about product
 export const CREATE_CHAT_API = (product_id) =>

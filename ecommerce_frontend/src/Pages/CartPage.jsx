@@ -3,6 +3,11 @@ import CartTable from '../Components/CartTable';
 import { get_user_cart_items, removeFromCart, validate_token } from '../api/cart';
 import { checkIfUserAuthAndNavigate } from "../service/authUser";
 import Navbar from '../Components/Navbar';
+import StripePaymentForm from '../ComponentPayment/StripePaymentForm';
+import { useNavigate } from "react-router-dom";
+import { ShoppingBag, Truck, Tag, CreditCard } from 'lucide-react';
+
+
 
 const CartPage = () => {
   const [subtotal, setSubtotal] = useState(0);
@@ -15,6 +20,7 @@ const CartPage = () => {
   const [discountValue_b, setDiscountValue_b] = useState(-1);
   const [discountAmount_f, setDiscountAmount_frontend] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
+  const navigate = useNavigate();
 
   const updateQuantity = (index, newQuantity) => {
     if (newQuantity <= 0) {
@@ -129,75 +135,120 @@ const CartPage = () => {
     return discount;
   };
 
+  const handlePaymentCheckout = () => {
+    if (totalAmount > 0) {
+      navigate("/payment", {
+        state: {
+          discount: discountAmount_f,
+          total: totalAmount,
+          subtotal: subtotal,
+        },
+      });
+    } else {
+      alert("Total amount must be greater than zero to proceed.");
+    }
+  }
+
   return (
     <>
       <Navbar></Navbar>
-      <div className=''>
-        <section className="bg-white justify-center px-12 w-full border-b py-5 lg:py-10">
-          {cartItems && cartItems.length > 0 && quantities.length > 0 ? (
-            <>
-              <div className='w-full grid grid-cols-[2fr_1fr]'>
-                <div className='w-full'>
+      <div className="max-w-7xl mx-auto bg-white">
+        <section className="px-4 py-8 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-8">
+            {/* Cart Items Section */}
+            <div className="w-full shadow-2xl rounded-lg">
+              {cartItems.length !== 0 && (
+                <CartTable
+                  products={cartItems}
+                  quantities={quantities}
+                  updateQuantity={updateQuantity}
+                  removeItem={removeItem}
+                />
+              )}
+            </div>
 
-                  <CartTable
-                    products={cartItems}
-                    quantities={quantities}
-                    updateQuantity={updateQuantity}
-                    removeItem={removeItem}
-                  />
-                </div>
-                <div>
-                  <section className="mx-auto w-full bg-neutral-100 md:max-w-[400px]">
-                    <div className="w-full">
-                      <div className="border py-5 px-4 shadow-md">
-                        <p className="font-bold">ORDER SUMMARY</p>
+            {/* Order Summary Section */}
+            <div className="w-full lg:max-w-md">
+              <div className="bg-gray-50 rounded-xl shadow-2xl overflow-hidden">
+                <div className="p-6">
+                  <h2 className="text-xl font-bold text-gray-800 mb-6">Order Summary</h2>
 
-                        <div className="flex justify-between border-b py-5">
-                          <p>Subtotal</p>
-                          <p>Rs. {subtotal.toFixed(2)}</p> {/* Display updated subtotal */}
-                        </div>
+                  {/* Subtotal */}
+                  <div className="flex justify-between py-4 border-b border-gray-200">
+                    <span className="text-gray-600">Subtotal</span>
+                    <span className="font-medium">Rs. {subtotal.toFixed(2)}</span>
+                  </div>
 
-                        <div className="flex justify-between border-b py-5">
-                          <p>Shipping</p>
-                          <p>Free</p>
-                        </div>
-
-                        <div className="flex justify-between border-b py-5">
-                          <p className='pt-2'>Voucher</p>
-                          <input type="text" onChange={(e) => setToken(e.target.value)} placeholder='token' className='border rounded-sm ps-2' value={token} />
-                          <button onClick={validate_voucher_token} className='bg-primary-light text-white p-2 rounded-md' >Apply</button>
-                        </div>
-
-                        <div className="flex justify-between py-5 border-b">
-                          <p>Discount</p>
-                          <p>Rs. {discountAmount_f}</p>
-                        </div>
-
-                        <div className="flex justify-between py-5">
-                          <p>Total</p>
-                          <p>Rs. {totalAmount.toFixed(2)}</p>
-                        </div>
-
-                        <a href="checkout-address.html">
-                          <button className="w-full bg-primary-light px-5 py-2 text-white rounded-md">
-                            Proceed to checkout
-                          </button>
-                        </a>
-                      </div>
+                  {/* Shipping */}
+                  <div className="flex items-center justify-between py-4 border-b border-gray-200">
+                    <div className="flex items-center gap-2">
+                      <Truck className="w-5 h-5 text-green-600" />
+                      <span className="text-gray-600">Shipping</span>
                     </div>
-                  </section>
+                    <span className="text-green-600 font-medium">Free</span>
+                  </div>
+
+                  {/* Voucher Input */}
+                  <div className="py-4 border-b border-gray-200">
+                    <div className="flex items-center gap-3">
+                      <Tag className="w-5 h-5 text-gray-500" />
+                      <input
+                        type="text"
+                        value={token}
+                        onChange={(e) => setToken(e.target.value)}
+                        placeholder="Enter voucher code"
+                        className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                      />
+                      <button
+                        onClick={validate_voucher_token}
+                        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                      >
+                        Apply
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Discount */}
+                  <div className="flex justify-between py-4 border-b border-gray-200">
+                    <span className="text-gray-600">Discount</span>
+                    <span className="font-medium text-green-600">Rs. {discountAmount_f}</span>
+                  </div>
+
+                  {/* Total */}
+                  <div className="flex justify-between py-4 mb-6">
+                    <span className="text-lg font-bold text-gray-800">Total</span>
+                    <span className="text-lg font-bold text-gray-800">
+                      Rs. {totalAmount.toFixed(2)}
+                    </span>
+                  </div>
+
+                  {/* Checkout Button */}
+                  <button
+                    onClick={handlePaymentCheckout}
+                    className="w-full bg-blue-600 text-white py-4 rounded-lg font-semibold
+                           hover:bg-blue-700 transition-colors duration-200
+                           flex items-center justify-center gap-2
+                           shadow-lg shadow-blue-500/30"
+                  >
+                    <CreditCard className="w-5 h-5" />
+                    Proceed to Checkout
+                  </button>
+
+                  {/* Trust Badges */}
+                  <div className="mt-6 grid grid-cols-2 gap-4 text-sm text-gray-500">
+                    <div className="flex items-center gap-2">
+                      <Truck className="w-4 h-4" />
+                      <span>Free Delivery</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Tag className="w-4 h-4" />
+                      <span>Best Price</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </>
-          ) : (
-            <div>
-              No Item In Cart
             </div>
-          )}
-
-
-
-
+          </div>
         </section>
       </div>
     </>

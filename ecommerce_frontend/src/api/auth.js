@@ -101,9 +101,8 @@ export const validateToken = async (callFrom) => {
 		return res;
 	} catch (error) {
 		if (error.response?.status === 401 && callFrom === "cart") {
-			alert("You need to login again.");
-			Cookies.remove("Authorization"); // Clear the authorization cookie
-			window.location = "/login"; // Redirect to the login page
+			Cookies.remove("Authorization");
+			window.location = "/login";
 		}
 		return null;
 	}

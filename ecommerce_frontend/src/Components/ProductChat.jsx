@@ -124,50 +124,53 @@ const ProductChat = ({ productId, user_id, chats }) => {
 
 
 	return (
-		<div className="font-roboto ms-12 w-[35vw] max-h-[70vh] flex flex-col border border-gray-300 rounded-2xl shadow-xl bg-white">
+		<div className="font-roboto ms-12 w-[35vw] max-h-[70vh] flex flex-col border border-gray-300 rounded-lg shadow-xl bg-white">
 			{/* Header */}
-			<div className="bg-primary-light text-white text-lg font-semibold text-center py-3 rounded-t-2xl shadow-md">
+			<div className="bg-primary-light text-white text-lg font-semibold text-center py-3 rounded-t-lg mt-[-1px] mx-[-1px] shadow-md">
 				Product Chat
 			</div>
 
-			{/* Messages */}
 			<div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
-				{messages.map((msg, index) => (
-					<div key={msg.id} className="flex flex-col space-y-1 bg-white shadow p-3 rounded-lg max-w-[90%] text-gray-800">
-						{/* User Question & Answer Merged */}
-						<div className="flex flex-col space-y-6">
-							<div className="flex items-top justify-between">
-								<span className="flex items-top space-x-3">
+				{messages.length === 0 ? (
+					<p className="text-gray-600 text-center py-12">No messages yet.</p>
+				) : (
+					messages.map((msg, index) => (
+						<div key={msg.id} className="flex flex-col space-y-1 bg-white shadow p-3 rounded-lg max-w-[90%] text-gray-800">
+							{/* User Question & Answer Merged */}
+							<div className="flex flex-col space-y-6">
+								<div className="flex items-top justify-between">
+									<span className="flex items-top space-x-3">
 
-									<ChatIcon text="Q" size={40} bubbleColor="#e04f2b" textColor="#FFFFFF" />
-									<span className="text-start">{msg.question}</span>
-								</span>
+										<ChatIcon text="Q" size={40} bubbleColor="#e04f2b" textColor="#FFFFFF" />
+										<span className="text-start">{msg.question}</span>
+									</span>
 
 
-								<div className="text-xs flex align-self-end text-gray-500 text-right">{msg.user_name} • {formatChatTimestamp(msg.created_at)}</div>
+									<div className="text-xs flex align-self-end text-gray-500 text-right">{msg.user_name} • {formatChatTimestamp(msg.created_at)}</div>
+								</div>
+
+								{msg.answer && (
+									<>
+										<div className="flex items-top justify-between">
+											<span className="flex items-top space-x-3">
+
+												<ChatIcon text="A" size={40} bubbleColor="#1b90e3" textColor="#FFFFFF" />
+
+												<span className="text-start">{msg.answer}</span>
+											</span>
+											<div className="text-xs text-gray-500 text-right mt-2">{msg.user_name} • {formatChatTimestamp(msg.updated_at)}</div>
+										</div>
+									</>
+								)}
 							</div>
-
-							{msg.answer && (
-								<>
-									<div className="flex items-top justify-between">
-										<span className="flex items-top space-x-3">
-
-											<ChatIcon text="A" size={40} bubbleColor="#1b90e3" textColor="#FFFFFF" />
-
-											<span className="text-start">{msg.answer}</span>
-										</span>
-										<div className="text-xs text-gray-500 text-right mt-2">{msg.user_name} • {formatChatTimestamp(msg.updated_at)}</div>
-									</div>
-								</>
-							)}
 						</div>
-					</div>
-				))}
+					)
+					))}
 				<div ref={chatEndRef} />
 			</div>
 
 			{/* Chat Input */}
-			<div className="flex items-center border-t border-gray-300 p-3 bg-white shadow-md rounded-b-2xl">
+			<div className="flex items-center border-t border-gray-300 p-3 bg-white shadow-md rounded-b-lg">
 				<input
 					type="text"
 					className="flex-1 p-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"

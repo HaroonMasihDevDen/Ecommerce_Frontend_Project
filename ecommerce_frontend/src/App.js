@@ -10,6 +10,8 @@ import CartPage from "./Pages/CartPage";
 import Register from "./Components/Register";
 import AdminMessagesTable from "./Components/AdminMessagesTable";
 import ControlHub from "./Pages/ControlHub";
+import StripePaymentForm from "./ComponentPayment/StripePaymentForm";
+import PaymentSuccess from "./ComponentPayment/PaymentSuccess";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -62,6 +64,8 @@ function App() {
 								/>
 							}
 						/>
+						<Route path="/payment" element={<StripePaymentForm />} />
+						<Route path="/payment-success" element={<PaymentSuccess />} />
 					</Routes>
 				</div>
 			</Router>
